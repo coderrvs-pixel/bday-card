@@ -24,8 +24,8 @@
         </div>
         <div class="buttons">
             <!-- Yes button shrinks down, No button blows up larger -->
-            <button class="btn" id="yesButton" onclick="scaleButtons()">Yes</button>
-            <button class="btn" id="noButton" onclick="scaleButtons()">No</button>
+            <button class="btn" id="yesButton" onclick="handleYes()">Yes</button>
+            <button class="btn" id="noButton" onclick="handleNo()">No</button>
         </div>
     </div>
 
@@ -40,10 +40,7 @@
             const noBtn = document.getElementById("noButton");
             const heading = document.getElementById("headlineText");
 
-            if (prankComplete) {
-                nextPage();
-                return;
-            }
+            if (prankComplete) return;
 
             // Inverse scaling step multipliers
             yesScale -= 0.2;
@@ -56,11 +53,23 @@
             // Step 3 trigger: Force click gate when Yes shrinks below safety boundaries
             if (yesScale <= 0) {
                 heading.innerText = 'Okay fine, you can click "Yes" now! 🥳';
-                yesBtn.style.display = "none";
-                noBtn.textContent = "Continue";
+                yesBtn.style.transform = "scale(0.05)";
+                yesBtn.style.pointerEvents = "auto";
                 noBtn.style.transform = "scale(2)";
                 prankComplete = true;
             }
+        }
+
+        function handleYes() {
+            if (prankComplete) {
+                nextPage();
+                return;
+            }
+            scaleButtons();
+        }
+
+        function handleNo() {
+            if (!prankComplete) scaleButtons();
         }
 
         function nextPage() {

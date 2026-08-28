@@ -1,23 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Create Birthday Card</title>
-	<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Birthday Message</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
-<body>
-	<main class="container sender_page">
-		<h1 class="header_text">How old is the birthday celebrant?</h1>
-		<form class="age_form" id="ageForm">
-			<label for="ageInput">Age</label>
-			<input id="ageInput" name="age" type="number" min="1" max="100" required autofocus>
-			<button class="btn" type="submit">Create card</button>
-		</form>
-	</main>
-	<script src="script.js"></script>
+<body class="receiver-flow message-page">
+    <main class="message-shell">
+        <p class="eyebrow">A message for you</p>
+        <h1 class="header_text" id="messageHeading">Happy Birthday!</h1>
+        <button class="flip-card" id="flipCard" type="button" aria-label="Open birthday message">
+            <span class="flip-card-inner">
+                <span class="flip-card-front">Open your<br>birthday card</span>
+                <span class="flip-card-back" id="messageText"></span>
+            </span>
+        </button>
+        <p class="flip-hint">Tap the card to open your message</p>
+    </main>
+    <script src="script.js"></script>
+    <script>
+        const cardParams = new URLSearchParams(window.location.search);
+        const name = cardParams.get("name");
+        const message = cardParams.get("message") || "Wishing you a day full of love, laughter, and lots of cake!";
+        if (name) document.getElementById("messageHeading").textContent = `Happy Birthday, ${name}!`;
+        document.getElementById("messageText").textContent = message;
+        document.getElementById("flipCard").addEventListener("click", (event) => {
+            event.currentTarget.classList.toggle("is-open");
+        });
+    </script>
 </body>
-
 </html>

@@ -1,6 +1,4 @@
 body {
-    --theme-color: #ff4a75;
-    --theme-contrast: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -244,6 +242,42 @@ body {
     color: var(--theme-color, #ff4a75);
 }
 
+.receiver-page .btn,
+.receiver-flow .btn,
+.receiver-page .header_text,
+.receiver-flow .header_text,
+.receiver-page p,
+.receiver-flow p,
+.receiver-page p a,
+.receiver-flow p a {
+    color: var(--theme-color, #ff4a75);
+}
+
+.receiver-page .btn,
+.receiver-flow .btn {
+    background-color: var(--theme-color, #ff4a75);
+}
+
+.receiver-page .btn:hover,
+.receiver-flow .btn:hover {
+    background-color: #ffffff;
+    color: var(--theme-color, #ff4a75);
+}
+
+.receiver-flow .buttons {
+    width: min(100%, 360px);
+    min-height: 70px;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: visible;
+}
+
+.receiver-flow #yesButton,
+.receiver-flow #noButton {
+    position: relative;
+    margin: 4px 0;
+}
+
 .receiver-flow .receiver-cake,
 .receiver-page .receiver-cake {
     position: relative;
@@ -449,4 +483,151 @@ p a {
 
 p a:hover {
     opacity: 1;
+}
+
+.receiver-flow .final-cake {
+    position: relative;
+    width: min(78vw, 280px);
+    height: 210px;
+    margin: 18px auto 10px;
+}
+
+.final-cake::before,
+.final-cake::after {
+    position: absolute;
+    bottom: 24px;
+    width: 18px;
+    height: 18px;
+    border: 3px solid var(--theme-color, #ff4a75);
+    border-radius: 50%;
+    background: var(--theme-color, #ff4a75);
+    content: "";
+}
+
+.final-cake::before { left: 42px; }
+.final-cake::after { right: 42px; }
+
+.final-cake .cake-decor {
+    position: absolute;
+    right: 24px;
+    bottom: 34px;
+    left: 24px;
+    height: 100px;
+    border: 4px solid var(--theme-color, #ff4a75);
+    border-radius: 12px 12px 24px 24px;
+    background: color-mix(in srgb, var(--theme-color, #ff4a75) 72%, white);
+    box-shadow: inset 0 20px 0 #ffffff;
+}
+
+.final-cake .cake-decor::before {
+    position: absolute;
+    top: 34px;
+    right: 12px;
+    left: 12px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--theme-color, #ff4a75);
+    box-shadow: 0 30px 0 var(--theme-color, #ff4a75);
+    content: "";
+}
+
+.final-cake .candle-flames {
+    position: absolute;
+    top: 4px;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    gap: 34px;
+}
+
+.final-cake .candle-flames i {
+    display: block;
+    width: 12px;
+    height: 28px;
+    border: 3px solid var(--theme-color, #ff4a75);
+    border-radius: 50% 50% 50% 0;
+    background: #ffffff;
+    transform: rotate(45deg);
+}
+
+.message-page {
+    min-height: 100vh;
+    height: auto;
+    box-sizing: border-box;
+    padding: 32px 18px;
+    overflow-y: auto;
+}
+
+.message-shell {
+    width: min(100%, 540px);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.message-shell .eyebrow {
+    color: var(--theme-color, #ff4a75);
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.flip-card {
+    width: min(100%, 380px);
+    height: 270px;
+    margin: 28px auto 12px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    perspective: 1200px;
+}
+
+.flip-card-inner {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s ease;
+    transform-style: preserve-3d;
+}
+
+.flip-card.is-open .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    backface-visibility: hidden;
+    border: 3px solid var(--theme-color, #ff4a75);
+    border-radius: 18px;
+    padding: 28px;
+    box-sizing: border-box;
+    box-shadow: 10px 10px 0 color-mix(in srgb, var(--theme-color, #ff4a75) 35%, transparent);
+}
+
+.flip-card-front {
+    background: var(--theme-color, #ff4a75);
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 900;
+}
+
+.flip-card-back {
+    overflow-y: auto;
+    background: #ffffff;
+    color: var(--theme-color, #ff4a75);
+    font-size: 21px;
+    line-height: 1.45;
+    text-align: center;
+    transform: rotateY(180deg);
+}
+
+.flip-hint {
+    color: var(--theme-color, #ff4a75);
+    font-size: 14px;
 }

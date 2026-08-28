@@ -53,8 +53,8 @@
                     targetBtn.style.transform = "none";
                     var buttonRect = targetBtn.getBoundingClientRect();
                     var areaRect = buttonArea.getBoundingClientRect();
-                    var horizontalRoom = Math.max(0, Math.min(64, buttonRect.left - areaRect.left - 4, areaRect.right - buttonRect.right - 4));
-                    var verticalRoom = Math.max(0, Math.min(14, buttonRect.top - areaRect.top - 4, areaRect.bottom - buttonRect.bottom - 4));
+                    var horizontalRoom = Math.max(0, Math.min(130, buttonRect.left - areaRect.left - 4, areaRect.right - buttonRect.right - 4));
+                    var verticalRoom = Math.max(0, Math.min(42, buttonRect.top - areaRect.top - 4, areaRect.bottom - buttonRect.bottom - 4));
                     var x = Math.round(Math.random() * horizontalRoom * 2 - horizontalRoom);
                     var y = Math.round(Math.random() * verticalRoom * 2 - verticalRoom);
                     targetBtn.style.transform = `translate(${x}px, ${y}px)`;
