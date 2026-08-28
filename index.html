@@ -42,14 +42,14 @@
 
         yesButton.addEventListener("click", attemptYes);
         noButton.addEventListener("click", () => {
-            if (screenClicks >= 7) window.location.href = "yes.html" + window.location.search;
+            if (!noButton.disabled) window.location.href = "yes.html" + window.location.search;
         });
 
         document.addEventListener("click", (event) => {
-            if (event.target === noButton && noButton.disabled) return;
+            if (event.target === noButton) return;
             screenClicks += 1;
-            if (screenClicks >= 7) noButton.disabled = false;
-        });
+            noButton.disabled = screenClicks < 7;
+        }, true);
     </script>
 </body>
 </html>
