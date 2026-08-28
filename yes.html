@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Just Kidding!</title>
+    <title>Birthday Surprise</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -12,50 +12,43 @@
     <div class="container">
         <div>
             <!-- Header text changed to the step-2 progressive prompt -->
-            <h1 class="header_text" id="headlineText">Just kidding! You can click "Yes" now... 😉</h1>
+            <h1 class="header_text" id="headlineText">Just kidding, click yes now.</h1>
         </div>
         <div class="gif_container">
-            <img src="https://i.postimg.cc/wTDG30TB/yes.gif" alt="Cute animated illustration" />
+            <div class="cake cake-small" role="img" aria-label="Pink birthday cake"><span class="cake-decor"></span><span class="candle-flames" aria-hidden="true"><i></i><i></i><i></i></span></div>
         </div>
-        <div class="buttons">
-            <!-- Yes button shrinks down, No button blows up larger -->
-            <button class="btn" id="yesButton" onclick="nextPage()">Yes</button>
-            <button class="btn" id="noButton" onclick="scaleButtons()">No</button>
+        <div class="buttons prank-buttons">
+            <button class="btn" id="yesButton" onclick="shrinkYes()">Yes</button>
+            <button class="btn" id="noButton" type="button" onclick="nextPage()">No</button>
         </div>
     </div>
 
     <script>
-        // Track sizing scales with state counters
         let yesScale = 1.0;
         let noScale = 1.0;
+        const noButton = document.getElementById("noButton");
+        noButton.style.pointerEvents = "none";
 
-        function scaleButtons() {
+        function shrinkYes() {
             const yesBtn = document.getElementById("yesButton");
-            const noBtn = document.getElementById("noButton");
-            const heading = document.getElementById("headlineText");
-
-            // Inverse scaling step multipliers
-            yesScale -= 0.15;
-            noScale += 0.35;
-
-            // Apply size shifts to buttons using inline styles
-            yesBtn.style.transform = `scale(${Math.max(yesScale, 0.15)})`;
+            const noBtn = noButton;
+            yesScale -= 0.2;
+            noScale += 0.2;
             noBtn.style.transform = `scale(${noScale})`;
-
-            // Step 3 trigger: Force click gate when Yes shrinks below safety boundaries
-            if (yesScale <= 0.35) {
-                heading.innerText = 'Okay fine, you can click "Yes" now! 🥳';
-                noBtn.style.display = "none"; // Erase No button completely
-                yesBtn.style.transform = "scale(1.5)"; // Return Yes to easy clear size
-                yesBtn.style.position = "static"; 
+            if (yesScale <= 0.05) {
+                yesBtn.style.display = "none";
+                noBtn.style.pointerEvents = "auto";
+                return;
             }
+            yesBtn.style.transform = `scale(${yesScale})`;
         }
 
         function nextPage() {
-            // Direct pass redirection to final file layout
-            window.location.href = `final.html${window.location.search}`;
+            if (yesScale > 0.05) return;
+            window.location.href = "okay.html" + window.location.search;
         }
     </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
