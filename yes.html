@@ -24,35 +24,42 @@
         </div>
         <div class="buttons">
             <!-- Yes button shrinks down, No button blows up larger -->
-            <button class="btn" id="yesButton" onclick="nextPage()">Yes</button>
+            <button class="btn" id="yesButton" onclick="scaleButtons()">Yes</button>
             <button class="btn" id="noButton" onclick="scaleButtons()">No</button>
         </div>
     </div>
 
     <script>
         // Track sizing scales with state counters
-        let yesScale = 1.0;
-        let noScale = 1.0;
+        let yesScale = 1;
+        let noScale = 1;
+        let prankComplete = false;
 
         function scaleButtons() {
             const yesBtn = document.getElementById("yesButton");
             const noBtn = document.getElementById("noButton");
             const heading = document.getElementById("headlineText");
 
+            if (prankComplete) {
+                nextPage();
+                return;
+            }
+
             // Inverse scaling step multipliers
-            yesScale -= 0.15;
-            noScale += 0.35;
+            yesScale -= 0.2;
+            noScale += 0.3;
 
             // Apply size shifts to buttons using inline styles
             yesBtn.style.transform = `scale(${Math.max(yesScale, 0.15)})`;
             noBtn.style.transform = `scale(${noScale})`;
 
             // Step 3 trigger: Force click gate when Yes shrinks below safety boundaries
-            if (yesScale <= 0.35) {
+            if (yesScale <= 0) {
                 heading.innerText = 'Okay fine, you can click "Yes" now! 🥳';
-                noBtn.style.display = "none"; // Erase No button completely
-                yesBtn.style.transform = "scale(1.5)"; // Return Yes to easy clear size
-                yesBtn.style.position = "static";
+                yesBtn.style.display = "none";
+                noBtn.textContent = "Continue";
+                noBtn.style.transform = "scale(2)";
+                prankComplete = true;
             }
         }
 

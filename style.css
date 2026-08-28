@@ -207,7 +207,19 @@ body {
 }
 
 .receiver-page {
+    color: var(--theme-color, #ff4a75);
+    font-family: "Nunito", "Trebuchet MS", sans-serif;
     background: linear-gradient(135deg, color-mix(in srgb, var(--theme-color, #ff4a75) 18%, white), #ffffff);
+}
+
+.receiver-page .btn {
+    background-color: var(--theme-color, #ff4a75);
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--theme-color, #ff4a75) 30%, transparent);
+}
+
+.receiver-page .btn:hover {
+    background-color: #ffffff;
+    color: var(--theme-color, #ff4a75);
 }
 
 .receiver-flow .header_text,
@@ -218,6 +230,7 @@ body {
 
 .receiver-flow {
     color: var(--theme-color, #ff4a75);
+    font-family: "Nunito", "Trebuchet MS", sans-serif;
     background: linear-gradient(135deg, color-mix(in srgb, var(--theme-color, #ff4a75) 18%, white), #ffffff);
 }
 
