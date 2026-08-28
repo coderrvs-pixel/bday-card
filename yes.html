@@ -19,7 +19,7 @@
         </div>
         <div class="buttons">
             <button class="btn" id="yesButton" onclick="shrinkYes()">Yes</button>
-            <button class="btn" id="noButton" onclick="nextPage()">No</button>
+            <button class="btn" id="noButton" type="button" disabled onclick="nextPage()">No</button>
         </div>
     </div>
 
@@ -35,12 +35,14 @@
             noBtn.style.transform = `scale(${noScale})`;
             if (yesScale <= 0.05) {
                 yesBtn.style.display = "none";
+                noBtn.disabled = false;
                 return;
             }
             yesBtn.style.transform = `scale(${yesScale})`;
         }
 
         function nextPage() {
+            if (yesScale > 0.05) return;
             window.location.href = "okay.html" + window.location.search;
         }
     </script>
