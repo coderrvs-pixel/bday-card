@@ -28,14 +28,16 @@
 
             <script>
                 let yesAttempts = 0;
+                const noButton = document.getElementById("noButton");
+                noButton.style.pointerEvents = "none";
 
                 function attemptYes() {
                     yesAttempts += 1;
                     moveButton();
                     if (yesAttempts >= 7) {
-                        const noButton = document.getElementById("noButton");
                         noButton.disabled = false;
                         noButton.removeAttribute("disabled");
+                        noButton.style.pointerEvents = "auto";
                         noButton.textContent = "No - unlocked";
                     }
                 }

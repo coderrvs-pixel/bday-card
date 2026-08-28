@@ -795,3 +795,7 @@ p a:hover {
     overflow-wrap: anywhere;
     word-break: break-word;
 }
+
+.escape-page #noButton:disabled {
+    pointer-events: none;
+}
