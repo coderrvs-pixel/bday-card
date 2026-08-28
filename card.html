@@ -1,41 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Birthday Card</title>
-    <link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Create Birthday Card</title>
+	<link rel="stylesheet" href="style.css">
 </head>
-<body class="card-page">
-    <main class="birthday-card-shell">
-        <p class="eyebrow">A little birthday surprise</p>
-        <h1 class="header_text" id="messageHeading">Happy Birthday!</h1>
-        <button class="flip-card" id="flipCard" type="button" aria-label="Open your birthday card">
-            <span class="flip-card-inner">
-                <span class="flip-card-front"><span class="card-ribbon">For you</span><strong>Open your<br>birthday card</strong><span class="card-seal">&#9733;</span></span>
-                <span class="flip-card-back"><strong id="typedMessage"></strong><span class="card-signoff">With love</span></span>
-            </span>
-        </button>
-        <p class="card-hint">Tap the card to open your message</p>
-    </main>
-    <script src="script.js"></script>
-    <script>
-        const cardParams = new URLSearchParams(window.location.search);
-        const messageHeading = document.getElementById("messageHeading");
-        const typedMessage = document.getElementById("typedMessage");
-        const message = cardParams.get("message") || "Wishing you a day full of love, laughter, and lots of cake!";
-        if (cardParams.get("name")) messageHeading.textContent = `Happy Birthday, ${cardParams.get("name")}!`;
-        document.getElementById("flipCard").addEventListener("click", (event) => {
-            const card = event.currentTarget;
-            if (card.classList.contains("is-open")) return;
-            card.classList.add("is-open");
-            let index = 0;
-            const typeNext = () => {
-                typedMessage.textContent = message.slice(0, index++);
-                if (index <= message.length) window.setTimeout(typeNext, 35);
-            };
-            typeNext();
-        });
-    </script>
+
+<body>
+	<main class="container sender_page">
+		<h1 class="header_text">How old is the birthday celebrant?</h1>
+		<form class="age_form" id="ageForm">
+			<label for="ageInput">Age</label>
+			<input id="ageInput" name="age" type="number" min="1" max="100" required autofocus>
+			<button class="btn" type="submit">Create card</button>
+		</form>
+	</main>
+	<script src="script.js"></script>
 </body>
+
 </html>

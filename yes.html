@@ -51,18 +51,14 @@
             if (yesScale <= 0) {
                 heading.innerText = 'Okay fine, you can click "Yes" now! 🥳';
                 yesBtn.style.transform = "scale(0.05)";
-                yesBtn.style.pointerEvents = "auto";
                 noBtn.style.transform = "scale(2)";
                 prankComplete = true;
             }
         }
 
         function handleYes() {
-            if (prankComplete) {
-                nextPage();
-                return;
-            }
-            scaleButtons();
+            if (prankComplete) nextPage();
+            else scaleButtons();
         }
 
         function handleNo() {
@@ -74,7 +70,6 @@
             window.location.href = "final.html" + window.location.search;
         }
     </script>
-    <script src="script.js"></script>
 </body>
 
 </html>

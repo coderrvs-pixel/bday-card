@@ -6,17 +6,13 @@
     <title>Birthday Surprise</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="cake-page">
+<body class="receiver-flow">
     <main class="container birthday-card">
         <p class="eyebrow">A little birthday surprise</p>
         <h1 class="header_text" id="happyText">Happy Birthday!</h1>
         <p class="blow-instruction">Blow your cake!</p>
         <div class="gif_container">
-            <div class="cake designed-cake" id="birthdayCake" role="img" aria-label="Birthday cake with lit candles">
-                <span class="cake-decor"></span>
-                <span class="cake-candles" aria-hidden="true"><i></i><i></i><i></i></span>
-                <span class="candle-flames" aria-hidden="true"><i></i><i></i><i></i></span>
-            </div>
+            <div class="cake final-cake" id="birthdayCake" role="img" aria-label="Birthday cake"><span class="cake-decor"></span><span class="cake-candles" aria-hidden="true"><i></i><i></i><i></i></span><span class="candle-flames" aria-hidden="true"><i></i><i></i><i></i></span></div>
         </div>
         <section class="receiver-card" id="receiverCard" hidden>
             <button class="message-card" id="messageCard" type="button">Open your birthday card</button>
@@ -65,29 +61,6 @@
             songTimer = window.setTimeout(playBirthdaySong, offset * 1000 + 200);
         }
 
-        function candlesOut() {
-            document.getElementById("birthdayCake").classList.add("blown-out");
-            document.querySelector(".blow-instruction").textContent = "Make a wish!";
-            document.getElementById("receiverCard").hidden = false;
-            document.getElementById("blowButton").textContent = "Candles blown out";
-            playBlowSound();
-        }
-
-        function playBlowSound() {
-            audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
-            if (audioContext.state === "suspended") audioContext.resume();
-            const oscillator = audioContext.createOscillator();
-            const gain = audioContext.createGain();
-            oscillator.type = "sine";
-            oscillator.frequency.setValueAtTime(480, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(120, audioContext.currentTime + 0.35);
-            gain.gain.setValueAtTime(0.18, audioContext.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.35);
-            oscillator.connect(gain).connect(audioContext.destination);
-            oscillator.start();
-            oscillator.stop(audioContext.currentTime + 0.35);
-        }
-
         async function listenForBlow() {
             const blowButton = document.getElementById("blowButton");
             try {
@@ -104,7 +77,9 @@
                     analyser.getByteTimeDomainData(volumeData);
                     const volume = volumeData.reduce((total, value) => total + Math.abs(value - 128), 0) / volumeData.length;
                     if (volume > 18) {
-                        candlesOut();
+                        document.getElementById("birthdayCake").classList.add("blown-out");
+                        document.querySelector(".blow-instruction").textContent = "Make a wish!";
+                        document.getElementById("receiverCard").hidden = false;
                         stream.getTracks().forEach((track) => track.stop());
                         blowButton.textContent = "Candles blown out";
                         return;
