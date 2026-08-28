@@ -185,9 +185,8 @@ body {
     transform: none !important;
 }
 
-.escape-page #noButton[aria-disabled="true"] {
-    cursor: not-allowed;
-    opacity: 0.55;
+.escape-page #noButton {
+    cursor: pointer;
 }
 
 .static-buttons {

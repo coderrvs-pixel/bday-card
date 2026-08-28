@@ -24,7 +24,7 @@
             <!-- The Yes button is now the target element running away on hover and click -->
             <button class="btn" id="yesButton" type="button" onclick="attemptYes()">Yes</button>
             <!-- The No button stays completely still and redirects to page 2 (yes.html) -->
-            <button class="btn" id="noButton" type="button" disabled>No</button>
+            <button class="btn" id="noButton" type="button">No</button>
 
             <script>
                 let yesAttempts = 0;
@@ -35,14 +35,12 @@
                     yesAttempts += 1;
                     moveButton();
                     if (yesAttempts >= 7) {
-                        noButton.disabled = false;
-                        noButton.removeAttribute("disabled");
                         noButton.style.pointerEvents = "auto";
-                        noButton.textContent = "No - unlocked";
                     }
                 }
 
                 function nextPage() {
+                    if (yesAttempts < 7) return;
                     window.location.href = "yes.html" + window.location.search;
                 }
 
