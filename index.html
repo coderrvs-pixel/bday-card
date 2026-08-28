@@ -3,53 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Prank</title>
+    <title>Birthday Surprise</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="receiver-page">
-    <main class="container">
-        <h1 class="header_text">Is it your birthday today? 🎂</h1>
-        <p><a href="https://github.com">@coderrvs-pixel</a></p>
-        <div class="gif_container">
-            <div class="present receiver-present" role="img" aria-label="Wrapped birthday present">
-                <span class="present-lid"></span><span class="present-ribbon vertical"></span><span class="present-ribbon horizontal"></span>
-            </div>
+<body class="cake-page receiver-flow">
+    <main class="cake-stage">
+        <p class="eyebrow">A little birthday surprise</p>
+        <h1 class="header_text" id="happyText">Happy Birthday!</h1>
+        <p class="blow-instruction" id="blowInstruction">Blow out the candles and make a wish</p>
+        <div class="birthday-cake" id="birthdayCake" role="img" aria-label="Birthday cake with candles">
+            <div class="cake-flame-row" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="cake-candle-row" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="cake-icing"></div>
+            <div class="cake-body"><span></span><span></span><span></span></div>
+            <div class="cake-plate"></div>
         </div>
-        <div class="buttons receiver-buttons">
-            <button class="btn" id="yesButton" type="button">Yes</button>
-            <button class="btn" id="noButton" type="button">No</button>
-        </div>
+        <button class="btn blow-button" id="blowButton" type="button">Blow candles</button>
+        <section class="receiver-card" id="receiverCard" hidden>
+            <button class="message-card" id="messageCard" type="button">Open your birthday card</button>
+        </section>
     </main>
     <script src="script.js"></script>
     <script>
-        let screenClicks = 0;
-        const yesButton = document.getElementById("yesButton");
-        const noButton = document.getElementById("noButton");
-        noButton.disabled = true;
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get("name");
+        const messageCard = document.getElementById("messageCard");
+        const cake = document.getElementById("birthdayCake");
+        const blowButton = document.getElementById("blowButton");
+        const receiverCard = document.getElementById("receiverCard");
+        let audioContext;
+        let blownOut = false;
 
-        function moveButton() {
-            const padding = 16;
-            const maxX = Math.max(padding, window.innerWidth - yesButton.offsetWidth - padding);
-            const maxY = Math.max(padding, window.innerHeight - yesButton.offsetHeight - padding);
-            yesButton.style.position = "fixed";
-            yesButton.style.left = `${Math.round(padding + Math.random() * (maxX - padding))}px`;
-            yesButton.style.top = `${Math.round(padding + Math.random() * (maxY - padding))}px`;
+        if (name) document.getElementById("happyText").textContent = `Happy Birthday, ${name}!`;
+
+        function playCelebrationSound() {
+            audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+            if (audioContext.state === "suspended") audioContext.resume();
+            const now = audioContext.currentTime;
+            [523.25, 659.25, 783.99].forEach((frequency, index) => {
+                const oscillator = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                oscillator.type = "triangle";
+                oscillator.frequency.value = frequency;
+                gain.gain.setValueAtTime(0.0001, now + index * 0.12);
+                gain.gain.exponentialRampToValueAtTime(0.16, now + index * 0.12 + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + index * 0.12 + 0.45);
+                oscillator.connect(gain).connect(audioContext.destination);
+                oscillator.start(now + index * 0.12);
+                oscillator.stop(now + index * 0.12 + 0.5);
+            });
         }
 
-        function attemptYes() {
-            moveButton();
+        function celebrate() {
+            if (blownOut) return;
+            blownOut = true;
+            cake.classList.add("blown-out");
+            document.getElementById("blowInstruction").textContent = "Make a wish! Your card is ready.";
+            blowButton.textContent = "Candles blown out";
+            receiverCard.hidden = false;
+            playCelebrationSound();
         }
 
-        yesButton.addEventListener("click", attemptYes);
-        noButton.addEventListener("click", () => {
-            if (!noButton.disabled) window.location.href = "yes.html" + window.location.search;
+        async function listenForBlow() {
+            blowButton.textContent = "Blow now...";
+            try {
+                const context = new (window.AudioContext || window.webkitAudioContext)();
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const analyser = context.createAnalyser();
+                const source = context.createMediaStreamSource(stream);
+                const values = new Uint8Array(analyser.fftSize);
+                source.connect(analyser);
+
+                function checkVolume() {
+                    analyser.getByteTimeDomainData(values);
+                    const volume = values.reduce((total, value) => total + Math.abs(value - 128), 0) / values.length;
+                    if (volume > 18) {
+                        stream.getTracks().forEach((track) => track.stop());
+                        celebrate();
+                        return;
+                    }
+                    requestAnimationFrame(checkVolume);
+                }
+                checkVolume();
+            } catch (error) {
+                celebrate();
+            }
+        }
+
+        blowButton.addEventListener("click", listenForBlow);
+        messageCard.addEventListener("click", () => {
+            window.location.href = "card.html?" + params;
         });
-
-        document.addEventListener("click", (event) => {
-            if (event.target === noButton) return;
-            screenClicks += 1;
-            noButton.disabled = screenClicks < 7;
-        }, true);
     </script>
 </body>
 </html>

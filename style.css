@@ -1,3 +1,5 @@
+@import url('https://googleapis.com');
+
 body {
     display: flex;
     justify-content: center;
@@ -7,441 +9,6 @@ body {
     /* Swapped from neon blue to birthday cake pink gradient */
     background: linear-gradient(#ffccd5, #ffb3c1);
     overflow: hidden;
-}
-
-/* Sender setup keeps the form comfortably portrait-oriented and scrollable. */
-.setup-page {
-    min-height: 100vh;
-    height: auto;
-    box-sizing: border-box;
-    padding: 32px 18px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background-color: #f4f1eb;
-    background-image: radial-gradient(#d6d1c8 1px, transparent 1px);
-    background-size: 18px 18px;
-    color: #111111;
-    font-family: Georgia, "Times New Roman", serif;
-}
-
-.setup-page::before,
-.setup-page::after {
-    position: fixed;
-    z-index: 0;
-    width: 120px;
-    height: 120px;
-    border: 2px solid #111111;
-    border-radius: 58% 42% 55% 45%;
-    content: "";
-    opacity: 0.08;
-    transform: rotate(18deg);
-}
-
-.setup-page::before {
-    top: 14%;
-    left: -45px;
-}
-
-.setup-page::after {
-    right: -45px;
-    bottom: 12%;
-    transform: rotate(-22deg);
-}
-
-.setup-page .setup-card {
-    position: relative;
-    z-index: 1;
-    width: min(100%, 540px);
-    box-sizing: border-box;
-    margin: 0 auto;
-    padding: clamp(28px, 7vw, 54px) clamp(22px, 7vw, 60px);
-    border: 2px solid #111111;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.94);
-    box-shadow: 10px 10px 0 #111111;
-}
-
-.setup-page .header_text {
-    color: #111111;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(34px, 9vw, 54px);
-    line-height: 1;
-    text-align: left;
-}
-
-.setup-page .eyebrow {
-    color: #111111;
-    font-family: "Trebuchet MS", sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-align: left;
-    text-transform: uppercase;
-}
-
-.setup-form {
-    display: grid;
-    gap: 12px;
-}
-
-.setup-form label {
-    margin-top: 10px;
-    color: #111111;
-    font-family: "Trebuchet MS", sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.setup-form input:not([type="color"]),
-.setup-form textarea,
-.link-result input {
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid #111111;
-    border-radius: 0;
-    padding: 13px;
-    background: #ffffff;
-    color: #111111;
-    font: 16px Georgia, "Times New Roman", serif;
-}
-
-.setup-form input[type="color"] {
-    width: 100%;
-    height: 48px;
-    border: 1px solid #111111;
-    padding: 3px;
-    background: #ffffff;
-}
-
-.setup-form textarea {
-    min-height: 150px;
-    resize: vertical;
-}
-
-.setup-page .btn {
-    width: 100%;
-    margin: 16px 0 0;
-    border: 2px solid #111111;
-    border-radius: 0;
-    background: #111111;
-    color: #ffffff;
-    box-shadow: none;
-}
-
-.setup-page .btn:hover {
-    background: #ffffff;
-    color: #111111;
-}
-
-.link-result {
-    margin-top: 30px;
-    border-top: 1px solid #111111;
-    padding-top: 18px;
-}
-
-.link-result p {
-    color: #111111;
-    font-family: "Trebuchet MS", sans-serif;
-    font-size: 14px;
-    text-align: left;
-}
-
-.balloon {
-    position: fixed;
-    z-index: 0;
-    width: 58px;
-    height: 74px;
-    border: 2px solid #111111;
-    border-radius: 50% 50% 45% 45%;
-    background: #ffffff;
-    box-shadow: inset -9px -8px 0 rgba(17, 17, 17, 0.08);
-}
-
-.balloon::after {
-    position: absolute;
-    top: 73px;
-    left: 28px;
-    width: 1px;
-    height: 115px;
-    background: #111111;
-    content: "";
-}
-
-.balloon-one { top: 5%; left: 5%; transform: rotate(-12deg); }
-.balloon-two { top: 17%; right: 7%; background: #111111; transform: rotate(14deg); }
-.balloon-three { right: 4%; bottom: 7%; transform: rotate(-8deg); }
-.balloon-four { bottom: 2%; left: 8%; background: #111111; transform: rotate(11deg); }
-
-.receiver-page #yesButton,
-.receiver-page #noButton {
-    position: relative;
-    margin-top: 4px;
-}
-
-.receiver-page #yesButton {
-    margin-right: 0;
-}
-
-.receiver-page #noButton {
-    margin-left: 0;
-}
-
-.receiver-page .buttons {
-    width: min(100%, 320px);
-    box-sizing: border-box;
-    gap: 10px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.receiver-page .btn {
-    margin: 4px 0;
-}
-
-.receiver-page .header_text,
-.receiver-page p,
-.receiver-page p a {
-    color: var(--theme-color, #ff4a75);
-}
-
-.receiver-page {
-    color: var(--theme-color, #ff4a75);
-    font-family: "Nunito", "Trebuchet MS", sans-serif;
-    background: linear-gradient(135deg, color-mix(in srgb, var(--theme-color, #ff4a75) 18%, white), #ffffff);
-}
-
-.receiver-page .btn {
-    background-color: var(--theme-color, #ff4a75);
-    box-shadow: 0 4px 10px color-mix(in srgb, var(--theme-color, #ff4a75) 30%, transparent);
-}
-
-.receiver-page .btn:hover {
-    background-color: #ffffff;
-    color: var(--theme-color, #ff4a75);
-}
-
-.receiver-flow .header_text,
-.receiver-flow p,
-.receiver-flow p a {
-    color: var(--theme-color, #ff4a75);
-}
-
-.receiver-flow {
-    color: var(--theme-color, #ff4a75);
-    font-family: "Nunito", "Trebuchet MS", sans-serif;
-    background: linear-gradient(135deg, color-mix(in srgb, var(--theme-color, #ff4a75) 18%, white), #ffffff);
-}
-
-.receiver-flow .btn {
-    background-color: var(--theme-color, #ff4a75);
-    box-shadow: 0 4px 10px color-mix(in srgb, var(--theme-color, #ff4a75) 30%, transparent);
-}
-
-.receiver-flow .btn:hover {
-    background-color: var(--theme-contrast);
-    color: var(--theme-color, #ff4a75);
-}
-
-.receiver-page .btn,
-.receiver-flow .btn,
-.receiver-page .header_text,
-.receiver-flow .header_text,
-.receiver-page p,
-.receiver-flow p,
-.receiver-page p a,
-.receiver-flow p a {
-    color: var(--theme-color, #ff4a75);
-}
-
-.receiver-page .btn,
-.receiver-flow .btn {
-    background-color: var(--theme-color, #ff4a75);
-}
-
-.receiver-page .btn:hover,
-.receiver-flow .btn:hover {
-    background-color: #ffffff;
-    color: var(--theme-color, #ff4a75);
-}
-
-.receiver-flow .buttons {
-    width: min(100%, 360px);
-    min-height: 70px;
-    margin-right: auto;
-    margin-left: auto;
-    overflow: visible;
-}
-
-.receiver-flow #yesButton,
-.receiver-flow #noButton {
-    position: relative;
-    margin: 4px 0;
-}
-
-.receiver-flow .receiver-cake,
-.receiver-page .receiver-cake {
-    position: relative;
-    width: 220px;
-    height: 185px;
-    margin: 24px auto 4px;
-}
-
-.receiver-flow .receiver-cake .plate,
-.receiver-page .receiver-cake .plate {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 22px;
-    border: 3px solid var(--theme-color, #ff4a75);
-    border-radius: 50%;
-    background: #ffffff;
-}
-
-.receiver-flow .receiver-cake .cake_body,
-.receiver-page .receiver-cake .cake_body {
-    position: absolute;
-    right: 20px;
-    bottom: 16px;
-    left: 20px;
-    height: 78px;
-    border: 3px solid var(--theme-color, #ff4a75);
-    border-radius: 0 0 16px 16px;
-    background: var(--theme-color, #ff4a75);
-}
-
-.receiver-flow .receiver-cake .icing,
-.receiver-page .receiver-cake .icing {
-    position: absolute;
-    right: 15px;
-    bottom: 75px;
-    left: 15px;
-    height: 48px;
-    border: 3px solid var(--theme-color, #ff4a75);
-    border-radius: 50% 50% 42% 42%;
-    background: #ffffff;
-}
-
-.receiver-flow .receiver-cake .icing::after,
-.receiver-page .receiver-cake .icing::after {
-    position: absolute;
-    right: 10px;
-    bottom: -18px;
-    left: 10px;
-    height: 25px;
-    border-bottom: 3px solid var(--theme-color, #ff4a75);
-    border-radius: 50%;
-    content: "";
-}
-
-.receiver-flow .receiver-cake .candle,
-.receiver-page .receiver-cake .candle {
-    position: absolute;
-    bottom: 112px;
-    left: 96px;
-    z-index: 1;
-    width: 28px;
-    height: 48px;
-    border: 3px solid var(--theme-color, #ff4a75);
-    background: var(--theme-color, #ff4a75);
-}
-
-.receiver-flow .receiver-cake .candle i,
-.receiver-page .receiver-cake .candle i {
-    position: absolute;
-    top: -22px;
-    left: 8px;
-    width: 10px;
-    height: 18px;
-    border: 2px solid var(--theme-color, #ff4a75);
-    border-radius: 50% 50% 50% 0;
-    background: #ffffff;
-    transform: rotate(45deg);
-}
-
-.receiver-flow .birthday-card .cake_body,
-.receiver-flow .birthday-card .icing,
-.receiver-flow .birthday-card .candle {
-    border-color: var(--theme-color, #ff4a75);
-    background-color: var(--theme-color, #ff4a75);
-}
-
-.receiver-flow .birthday-card .icing,
-.receiver-flow .birthday-card .plate {
-    background-color: var(--theme-contrast);
-}
-
-.receiver-flow .birthday-card .plate,
-.receiver-flow .birthday-card .candle-flames i {
-    border-color: var(--theme-color, #ff4a75);
-}
-
-.receiver-flow .birthday-card .cake {
-    color: var(--theme-color, #ff4a75);
-}
-
-.receiver-flow .birthday-card .cake-decor {
-    background-color: var(--theme-color, #ff4a75);
-}
-
-.receiver-flow .birthday-card .candle-flames i {
-    background-color: var(--theme-color, #ff4a75);
-}
-
-.receiver-flow .birthday-card .cake,
-.receiver-flow .birthday-card .cake-decor,
-.receiver-flow .birthday-card .candle-flames {
-    display: block;
-}
-
-.receiver-flow .birthday-card .cake-decor {
-    position: relative;
-    width: min(78vw, 260px);
-    height: 108px;
-    margin: 45px auto 18px;
-    border: 4px solid var(--theme-color);
-    border-radius: 18px 18px 28px 28px;
-    background: color-mix(in srgb, var(--theme-color) 72%, white);
-    box-shadow: inset 0 22px 0 #ffffff;
-}
-
-.receiver-flow .birthday-card .cake-decor::before {
-    position: absolute;
-    right: 15px;
-    bottom: 25px;
-    left: 15px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--theme-color);
-    box-shadow: 0 34px 0 var(--theme-color);
-    content: "";
-}
-
-.receiver-flow .birthday-card .candle-flames {
-    position: absolute;
-    top: 22px;
-    right: 0;
-    left: 0;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    gap: 34px;
-}
-
-.receiver-flow .birthday-card .candle-flames i {
-    display: block;
-    width: 13px;
-    height: 28px;
-    border: 3px solid var(--theme-color);
-    border-radius: 50% 50% 50% 0;
-    background: var(--theme-color);
-    transform: rotate(45deg);
-}
-
-.receiver-page #noButton:disabled {
-    cursor: not-allowed;
-    opacity: 1;
-    filter: none;
 }
 
 #noButton {
@@ -535,317 +102,177 @@ p a:hover {
     opacity: 1;
 }
 
-.receiver-flow .final-cake {
-    position: relative;
-    width: min(78vw, 280px);
-    height: 210px;
-    margin: 18px auto 10px;
-}
-
-.final-cake::before,
-.final-cake::after {
-    position: absolute;
-    bottom: 24px;
-    width: 18px;
-    height: 18px;
-    border: 3px solid var(--theme-color, #ff4a75);
-    border-radius: 50%;
-    background: var(--theme-color, #ff4a75);
-    content: "";
-}
-
-.final-cake::before { left: 42px; }
-.final-cake::after { right: 42px; }
-
-.final-cake .cake-decor {
-    position: absolute;
-    right: 24px;
-    bottom: 34px;
-    left: 24px;
-    height: 100px;
-    border: 4px solid var(--theme-color, #ff4a75);
-    border-radius: 12px 12px 24px 24px;
-    background: color-mix(in srgb, var(--theme-color, #ff4a75) 72%, white);
-    box-shadow: inset 0 20px 0 #ffffff;
-}
-
-.final-cake .cake-decor::before {
-    position: absolute;
-    top: 34px;
-    right: 12px;
-    left: 12px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--theme-color, #ff4a75);
-    box-shadow: 0 30px 0 var(--theme-color, #ff4a75);
-    content: "";
-}
-
-.final-cake .candle-flames {
-    position: absolute;
-    top: 4px;
-    right: 0;
-    left: 0;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    gap: 34px;
-}
-
-.final-cake .candle-flames i {
-    display: block;
-    width: 12px;
-    height: 28px;
-    border: 3px solid var(--theme-color, #ff4a75);
-    border-radius: 50% 50% 50% 0;
-    background: #ffffff;
-    transform: rotate(45deg);
-}
-
-.message-page {
+.cake-page {
     min-height: 100vh;
     height: auto;
     box-sizing: border-box;
-    padding: 32px 18px;
+    overflow-x: hidden;
     overflow-y: auto;
+    background: radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--theme-color) 28%, white), #ffffff 58%);
 }
 
-.message-shell {
-    width: min(100%, 540px);
-    margin: 0 auto;
-    text-align: center;
-}
-
-.message-shell .eyebrow {
-    color: var(--theme-color, #ff4a75);
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-.flip-card {
-    width: min(100%, 380px);
-    height: 270px;
-    margin: 28px auto 12px;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    perspective: 1200px;
-}
-
-.flip-card-inner {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.7s ease;
-    transform-style: preserve-3d;
-}
-
-.flip-card.is-open .flip-card-inner {
-    transform: rotateY(180deg);
-}
-
-.flip-card-front,
-.flip-card-back {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    backface-visibility: hidden;
-    border: 3px solid var(--theme-color, #ff4a75);
-    border-radius: 18px;
-    padding: 28px;
+.cake-stage {
+    width: min(100%, 620px);
+    min-height: 100vh;
     box-sizing: border-box;
-    box-shadow: 10px 10px 0 color-mix(in srgb, var(--theme-color, #ff4a75) 35%, transparent);
-}
-
-.flip-card-front {
-    background: var(--theme-color, #ff4a75);
-    color: #ffffff;
-    font-size: 28px;
-    font-weight: 900;
-}
-
-.flip-card-back {
-    overflow-y: auto;
-    background: #ffffff;
-    color: var(--theme-color, #ff4a75);
-    font-size: 21px;
-    line-height: 1.45;
+    margin: 0 auto;
+    padding: 32px 18px 48px;
     text-align: center;
-    transform: rotateY(180deg);
 }
 
-.flip-hint {
-    color: var(--theme-color, #ff4a75);
-    font-size: 14px;
+.cake-stage .eyebrow,
+.cake-stage .header_text,
+.cake-stage .blow-instruction {
+    color: var(--theme-color);
 }
 
-/* Receiver theme overrides legacy defaults below. */
-.receiver-page,
-.receiver-flow {
-    color: var(--theme-color, #ff4a75);
-    background: linear-gradient(135deg, color-mix(in srgb, var(--theme-color, #ff4a75) 22%, white), #ffffff);
+.cake-stage .header_text {
+    margin-bottom: 10px;
 }
 
-.receiver-page .header_text,
-.receiver-page p,
-.receiver-page p a,
-.receiver-flow .header_text,
-.receiver-flow p,
-.receiver-flow p a {
-    color: var(--theme-color, #ff4a75);
-}
-
-.receiver-page .btn,
-.receiver-flow .btn {
-    background-color: var(--theme-color, #ff4a75);
-    color: #ffffff;
-}
-
-.receiver-page #noButton:disabled {
-    opacity: 1;
-    filter: none;
-}
-
-.receiver-page .receiver-present,
-.receiver-flow .receiver-present {
+.birthday-cake {
     position: relative;
-    width: min(68vw, 230px);
-    height: 180px;
-    margin: 22px auto 12px;
+    width: min(86vw, 360px);
+    height: 300px;
+    margin: 28px auto 10px;
+    animation: cake-float 3s ease-in-out infinite;
 }
 
-.receiver-present::before {
+.cake-body {
     position: absolute;
-    right: 12px;
-    bottom: 0;
-    left: 12px;
-    height: 130px;
-    border: 4px solid var(--theme-color, #ff4a75);
-    border-radius: 8px;
-    background: color-mix(in srgb, var(--theme-color, #ff4a75) 78%, white);
-    box-shadow: inset 0 0 0 8px rgba(255, 255, 255, 0.22);
-    content: "";
+    right: 26px;
+    bottom: 38px;
+    left: 26px;
+    height: 132px;
+    border: 5px solid var(--theme-color);
+    border-radius: 14px 14px 28px 28px;
+    background: color-mix(in srgb, var(--theme-color) 78%, white);
+    box-shadow: inset 0 22px 0 #ffffff;
 }
 
-.receiver-present .present-lid {
+.cake-body span {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--theme-color);
+}
+
+.cake-body span:nth-child(1) { top: 50px; left: 44px; }
+.cake-body span:nth-child(2) { top: 85px; left: 50%; }
+.cake-body span:nth-child(3) { top: 50px; right: 44px; }
+
+.cake-icing {
+    position: absolute;
+    right: 18px;
+    bottom: 150px;
+    left: 18px;
+    height: 54px;
+    z-index: 1;
+    border: 5px solid var(--theme-color);
+    border-radius: 50%;
+    background: #ffffff;
+}
+
+.cake-plate {
     position: absolute;
     right: 0;
-    bottom: 123px;
+    bottom: 20px;
     left: 0;
-    z-index: 2;
     height: 34px;
-    border: 4px solid var(--theme-color, #ff4a75);
-    border-radius: 8px;
-    background: var(--theme-color, #ff4a75);
+    border: 5px solid var(--theme-color);
+    border-radius: 50%;
+    background: #ffffff;
 }
 
-.receiver-present .present-ribbon {
+.cake-candle-row,
+.cake-flame-row {
     position: absolute;
+    right: 0;
+    left: 0;
     z-index: 3;
-    display: block;
-    background: var(--theme-contrast, #ffffff);
-}
-
-.receiver-present .present-ribbon.vertical {
-    top: 22px;
-    bottom: 0;
-    left: calc(50% - 11px);
-    width: 22px;
-}
-
-.receiver-present .present-ribbon.horizontal {
-    right: 0;
-    bottom: 112px;
-    left: 0;
-    height: 13px;
-}
-
-.receiver-present::after {
-    position: absolute;
-    top: 0;
-    left: calc(50% - 22px);
-    width: 44px;
-    height: 27px;
-    border: 4px solid var(--theme-color, #ff4a75);
-    border-bottom: 0;
-    border-radius: 50% 50% 0 0;
-    content: "";
-}
-
-.receiver-page .btn,
-.receiver-flow .btn {
-    color: var(--theme-contrast, #ffffff);
-}
-
-.receiver-flow .cake-candles {
-    position: absolute;
-    top: 42px;
-    right: 0;
-    left: 0;
-    z-index: 2;
     display: flex;
     justify-content: center;
-    gap: 34px;
+    gap: 42px;
 }
 
-.receiver-flow .cake-candles i {
+.cake-candle-row { bottom: 192px; }
+.cake-candle-row i {
     display: block;
-    width: 14px;
-    height: 48px;
-    border: 3px solid var(--theme-color, #ff4a75);
-    border-radius: 5px 5px 2px 2px;
-    background: var(--theme-color, #ff4a75);
-    box-shadow: inset 4px 0 0 rgba(255, 255, 255, 0.35);
+    width: 20px;
+    height: 62px;
+    border: 4px solid var(--theme-color);
+    border-radius: 5px;
+    background: var(--theme-color);
+    box-shadow: inset 5px 0 rgba(255, 255, 255, 0.35);
 }
 
-.receiver-flow .candle-flames {
-    top: 20px;
-    z-index: 3;
+.cake-flame-row { bottom: 258px; }
+.cake-flame-row i {
+    display: block;
+    width: 18px;
+    height: 30px;
+    border: 3px solid var(--theme-color);
+    border-radius: 50% 50% 50% 0;
+    background: #ffd166;
+    transform: rotate(45deg);
+    animation: flame-flicker 0.7s ease-in-out infinite alternate;
 }
 
-.receiver-flow .receiver-card {
+.cake-flame-row i:nth-child(2) { animation-delay: 0.2s; }
+.cake-flame-row i:nth-child(3) { animation-delay: 0.4s; }
+
+.blown-out .cake-flame-row {
+    opacity: 0;
+    transform: translateY(12px) scale(0.4);
+    transition: 0.35s ease;
+}
+
+.blown-out { animation: cake-celebrate 0.7s ease; }
+
+.blow-button {
+    display: block;
+    margin: 18px auto;
+    background: var(--theme-color);
+    color: var(--theme-contrast);
+    box-shadow: 0 7px 0 color-mix(in srgb, var(--theme-color) 65%, black);
+}
+
+.receiver-card[hidden] { display: none; }
+
+.receiver-card:not([hidden]) {
     display: grid;
     place-items: center;
-    margin: 22px auto 8px;
+    animation: card-rise 0.7s ease both;
 }
 
-.receiver-flow .receiver-card[hidden] {
-    display: none;
-}
-
-.receiver-flow .message-card {
-    position: relative;
-    border: 3px solid var(--theme-color, #ff4a75);
+.message-card {
+    border: 3px solid var(--theme-color);
     border-radius: 14px;
-    padding: 16px 24px 16px 48px;
-    background: #ffffff;
-    color: var(--theme-color, #ff4a75);
+    padding: 16px 24px;
+    background: var(--theme-color);
+    color: var(--theme-contrast);
     font: 700 16px "Trebuchet MS", sans-serif;
     cursor: pointer;
-    box-shadow: 6px 6px 0 color-mix(in srgb, var(--theme-color, #ff4a75) 35%, transparent);
+    box-shadow: 6px 6px 0 color-mix(in srgb, var(--theme-color) 35%, transparent);
 }
 
-.receiver-flow .message-card::before {
-    position: absolute;
-    top: 50%;
-    left: 19px;
-    width: 16px;
-    height: 12px;
-    border: 2px solid var(--theme-color, #ff4a75);
-    border-radius: 2px;
-    content: "";
-    transform: translateY(-50%);
+.message-card:hover { transform: translateY(-3px) rotate(-1deg); }
+
+@keyframes cake-float {
+    50% { transform: translateY(-7px); }
 }
 
-.receiver-flow .message-card:hover {
-    background: var(--theme-color, #ff4a75);
-    color: #ffffff;
-    transform: translateY(-2px);
+@keyframes flame-flicker {
+    to { transform: rotate(52deg) scale(1.12); opacity: 0.75; }
 }
 
-.receiver-flow .card-link {
-    min-width: 180px;
+@keyframes cake-celebrate {
+    35% { transform: scale(1.05) rotate(-2deg); }
+    70% { transform: scale(0.98) rotate(2deg); }
+}
+
+@keyframes card-rise {
+    from { opacity: 0; transform: translateY(18px) scale(0.92); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
