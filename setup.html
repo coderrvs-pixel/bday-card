@@ -1,51 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create a Bday Surprise</title>
-    <link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Set Up the Birthday Card</title>
+	<link rel="stylesheet" href="style.css">
 </head>
-<body class="setup-page">
-    <main class="container setup-card">
-        <p class="eyebrow">Sender setup</p>
-        <h1 class="header_text">Create your Bday Surprise</h1>
-        <form id="setupForm" class="setup-form">
-            <label for="themeColor">Choose a theme color</label>
-            <input id="themeColor" name="themeColor" type="color" value="#ff4a75">
-            <label for="celebrant">Name of the birthday celebrant</label>
-            <input id="celebrant" name="celebrant" placeholder="For example, Alex" required>
-            <label for="message">Final card message</label>
-            <textarea id="message" name="message" rows="7" required>Wishing you a day full of love, laughter, and lots of cake.</textarea>
-            <button class="btn" type="submit">Create link</button>
-        </form>
-        <div id="linkResult" class="link-result" hidden>
-            <p>Your personal birthday link is ready:</p>
-            <input id="shareLink" readonly>
-            <button class="btn" id="copyLink" type="button">Copy link</button>
-        </div>
-    </main>
-    <script src="script.js"></script>
-    <script>
-        const setupForm = document.getElementById("setupForm");
-        const linkResult = document.getElementById("linkResult");
-        const shareLink = document.getElementById("shareLink");
 
-        setupForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-            const params = new URLSearchParams({
-                color: document.getElementById("themeColor").value,
-                name: document.getElementById("celebrant").value,
-                message: document.getElementById("message").value
-            });
-            shareLink.value = `${window.location.origin}${window.location.pathname.replace("setup.html", "index.html")}?${params}`;
-            linkResult.hidden = false;
-        });
+<body class="setup_page">
+	<main class="setup_panel">
+		<p class="eyebrow">A little birthday surprise</p>
+		<h1 class="header_text">Create your Bday Surprise</h1>
+		<p class="text setup_copy">Choose the style, add the message, and set the number candles.</p>
 
-        document.getElementById("copyLink").addEventListener("click", async () => {
-            await navigator.clipboard.writeText(shareLink.value);
-            document.getElementById("copyLink").textContent = "Copied!";
-        });
-    </script>
+		<form id="ageForm" class="age_form">
+			<label for="themeColor">Choose a theme color</label>
+			<input id="themeColor" name="themeColor" type="color" value="#ff4a75">
+			<label for="celebrantName">Celebrant's name</label>
+			<input id="celebrantName" name="celebrantName" type="text" maxlength="60" autocomplete="off" required autofocus>
+			<label for="senderName">Your name</label>
+			<input id="senderName" name="senderName" type="text" maxlength="60" autocomplete="off" required>
+			<label for="message">Final card message</label>
+			<textarea id="message" name="message" rows="5" required>Wishing you a day full of love, laughter, and lots of cake.</textarea>
+			<label for="age">Age of the celebrant</label>
+			<input id="age" name="age" type="number" min="1" max="120" inputmode="numeric" placeholder="Example: 18" required>
+			<p id="ageError" class="form_error" role="alert" aria-live="polite"></p>
+			<button class="btn" type="submit">Create the card</button>
+		</form>
+	</main>
+
+	<script src="script.js"></script>
 </body>
+
 </html>
