@@ -29,7 +29,7 @@
         noButton.disabled = true;
 
         document.addEventListener("click", (event) => {
-            if (event.target.closest("button")) return;
+            if (event.target.closest("button, a")) return;
             screenClicks += 1;
             if (screenClicks >= 7) noButton.disabled = false;
         });

@@ -19,6 +19,20 @@ body {
     font-family: "Trebuchet MS", sans-serif;
 }
 
+html:has(.receiver-page),
+html:has(.receiver-flow) {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body.receiver-page,
+body.receiver-flow {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
 .container { width: min(92vw, 760px); text-align: center; }
 .header_text { margin: 18px auto; font-size: clamp(2rem, 7vw, 3.8rem); line-height: 1.05; color: var(--theme-color); }
 p { color: var(--theme-color); }
