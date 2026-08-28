@@ -24,9 +24,21 @@
         const name = cardParams.get("name");
         const message = cardParams.get("message") || "Wishing you a day full of love, laughter, and lots of cake!";
         if (name) document.getElementById("messageHeading").textContent = `Happy Birthday, ${name}!`;
-        document.getElementById("messageText").textContent = message;
         document.getElementById("flipCard").addEventListener("click", (event) => {
-            event.currentTarget.classList.toggle("is-open");
+            const card = event.currentTarget;
+            const messageText = document.getElementById("messageText");
+            const opening = !card.classList.contains("is-open");
+            card.classList.toggle("is-open", opening);
+            if (opening) {
+                messageText.textContent = "";
+                let characterIndex = 0;
+                const typeMessage = () => {
+                    messageText.textContent = message.slice(0, characterIndex);
+                    characterIndex += 1;
+                    if (characterIndex <= message.length) window.setTimeout(typeMessage, 32);
+                };
+                typeMessage();
+            }
         });
     </script>
 </body>

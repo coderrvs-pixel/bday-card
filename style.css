@@ -388,6 +388,56 @@ body {
     background-color: var(--theme-color, #ff4a75);
 }
 
+.receiver-flow .birthday-card .cake,
+.receiver-flow .birthday-card .cake-decor,
+.receiver-flow .birthday-card .candle-flames {
+    display: block;
+}
+
+.receiver-flow .birthday-card .cake-decor {
+    position: relative;
+    width: min(78vw, 260px);
+    height: 108px;
+    margin: 45px auto 18px;
+    border: 4px solid var(--theme-color);
+    border-radius: 18px 18px 28px 28px;
+    background: color-mix(in srgb, var(--theme-color) 72%, white);
+    box-shadow: inset 0 22px 0 #ffffff;
+}
+
+.receiver-flow .birthday-card .cake-decor::before {
+    position: absolute;
+    right: 15px;
+    bottom: 25px;
+    left: 15px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--theme-color);
+    box-shadow: 0 34px 0 var(--theme-color);
+    content: "";
+}
+
+.receiver-flow .birthday-card .candle-flames {
+    position: absolute;
+    top: 22px;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 34px;
+}
+
+.receiver-flow .birthday-card .candle-flames i {
+    display: block;
+    width: 13px;
+    height: 28px;
+    border: 3px solid var(--theme-color);
+    border-radius: 50% 50% 50% 0;
+    background: var(--theme-color);
+    transform: rotate(45deg);
+}
+
 .receiver-page #noButton:disabled {
     cursor: not-allowed;
     opacity: 1;
