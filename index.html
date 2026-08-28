@@ -22,7 +22,7 @@
     </main>
     <script src="script.js"></script>
     <script>
-        let yesAttempts = 0;
+        let screenClicks = 0;
         const yesButton = document.getElementById("yesButton");
         const noButton = document.getElementById("noButton");
         noButton.disabled = true;
@@ -37,15 +37,18 @@
         }
 
         function attemptYes() {
-            yesAttempts += 1;
             moveButton();
-            if (yesAttempts >= 7) noButton.disabled = false;
         }
 
-        yesButton.addEventListener("mouseenter", moveButton);
         yesButton.addEventListener("click", attemptYes);
         noButton.addEventListener("click", () => {
-            if (yesAttempts >= 7) window.location.href = "yes.html" + window.location.search;
+            if (screenClicks >= 7) window.location.href = "yes.html" + window.location.search;
+        });
+
+        document.addEventListener("click", (event) => {
+            if (event.target === noButton && noButton.disabled) return;
+            screenClicks += 1;
+            if (screenClicks >= 7) noButton.disabled = false;
         });
     </script>
 </body>
