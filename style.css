@@ -175,6 +175,14 @@ body {
     position: relative; /* Secures absolute child buttons bounds */
 }
 
+.prank-buttons #yesButton,
+.prank-buttons #noButton {
+    flex: 0 0 112px;
+    width: 112px;
+    height: 52px;
+    margin: 0;
+}
+
 .escape-page #yesButton {
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.15s ease-out;
 }
@@ -547,6 +555,13 @@ p a:hover {
     }
 
     .btn {
+        width: 104px;
+        height: 48px;
+    }
+
+    .prank-buttons #yesButton,
+    .prank-buttons #noButton {
+        flex-basis: 104px;
         width: 104px;
         height: 48px;
     }
