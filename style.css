@@ -1,4 +1,6 @@
 body {
+    --theme-color: #ff4a75;
+    --theme-contrast: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -215,9 +217,21 @@ body {
 }
 
 .receiver-flow {
+    color: var(--theme-color, #ff4a75);
     background: linear-gradient(135deg, color-mix(in srgb, var(--theme-color, #ff4a75) 18%, white), #ffffff);
 }
 
+.receiver-flow .btn {
+    background-color: var(--theme-color, #ff4a75);
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--theme-color, #ff4a75) 30%, transparent);
+}
+
+.receiver-flow .btn:hover {
+    background-color: var(--theme-contrast);
+    color: var(--theme-color, #ff4a75);
+}
+
+.receiver-flow .receiver-cake,
 .receiver-page .receiver-cake {
     position: relative;
     width: 220px;
@@ -225,50 +239,55 @@ body {
     margin: 24px auto 4px;
 }
 
+.receiver-flow .receiver-cake .plate,
 .receiver-page .receiver-cake .plate {
     position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
     height: 22px;
-    border: 3px solid #111111;
+    border: 3px solid var(--theme-color, #ff4a75);
     border-radius: 50%;
     background: #ffffff;
 }
 
+.receiver-flow .receiver-cake .cake_body,
 .receiver-page .receiver-cake .cake_body {
     position: absolute;
     right: 20px;
     bottom: 16px;
     left: 20px;
     height: 78px;
-    border: 3px solid #111111;
+    border: 3px solid var(--theme-color, #ff4a75);
     border-radius: 0 0 16px 16px;
     background: var(--theme-color, #ff4a75);
 }
 
+.receiver-flow .receiver-cake .icing,
 .receiver-page .receiver-cake .icing {
     position: absolute;
     right: 15px;
     bottom: 75px;
     left: 15px;
     height: 48px;
-    border: 3px solid #111111;
+    border: 3px solid var(--theme-color, #ff4a75);
     border-radius: 50% 50% 42% 42%;
     background: #ffffff;
 }
 
+.receiver-flow .receiver-cake .icing::after,
 .receiver-page .receiver-cake .icing::after {
     position: absolute;
     right: 10px;
     bottom: -18px;
     left: 10px;
     height: 25px;
-    border-bottom: 3px solid #111111;
+    border-bottom: 3px solid var(--theme-color, #ff4a75);
     border-radius: 50%;
     content: "";
 }
 
+.receiver-flow .receiver-cake .candle,
 .receiver-page .receiver-cake .candle {
     position: absolute;
     bottom: 112px;
@@ -276,25 +295,56 @@ body {
     z-index: 1;
     width: 28px;
     height: 48px;
-    border: 3px solid #111111;
+    border: 3px solid var(--theme-color, #ff4a75);
     background: var(--theme-color, #ff4a75);
 }
 
+.receiver-flow .receiver-cake .candle i,
 .receiver-page .receiver-cake .candle i {
     position: absolute;
     top: -22px;
     left: 8px;
     width: 10px;
     height: 18px;
-    border: 2px solid #111111;
+    border: 2px solid var(--theme-color, #ff4a75);
     border-radius: 50% 50% 50% 0;
     background: #ffffff;
     transform: rotate(45deg);
 }
 
+.receiver-flow .birthday-card .cake_body,
+.receiver-flow .birthday-card .icing,
+.receiver-flow .birthday-card .candle {
+    border-color: var(--theme-color, #ff4a75);
+    background-color: var(--theme-color, #ff4a75);
+}
+
+.receiver-flow .birthday-card .icing,
+.receiver-flow .birthday-card .plate {
+    background-color: var(--theme-contrast);
+}
+
+.receiver-flow .birthday-card .plate,
+.receiver-flow .birthday-card .candle-flames i {
+    border-color: var(--theme-color, #ff4a75);
+}
+
+.receiver-flow .birthday-card .cake {
+    color: var(--theme-color, #ff4a75);
+}
+
+.receiver-flow .birthday-card .cake-decor {
+    background-color: var(--theme-color, #ff4a75);
+}
+
+.receiver-flow .birthday-card .candle-flames i {
+    background-color: var(--theme-color, #ff4a75);
+}
+
 .receiver-page #noButton:disabled {
     cursor: not-allowed;
-    opacity: 0.45;
+    opacity: 1;
+    filter: none;
 }
 
 #noButton {

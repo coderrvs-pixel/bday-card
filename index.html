@@ -48,10 +48,15 @@
 
                 function moveButton() {
                     var targetBtn = document.getElementById("yesButton");
+                    var buttonArea = targetBtn.parentElement;
 
-                    // Nudge the button around its original position without leaving the viewport.
-                    var x = Math.round(Math.random() * 24 - 12);
-                    var y = Math.round(Math.random() * 16 - 8);
+                    targetBtn.style.transform = "none";
+                    var buttonRect = targetBtn.getBoundingClientRect();
+                    var areaRect = buttonArea.getBoundingClientRect();
+                    var horizontalRoom = Math.max(0, Math.min(32, buttonRect.left - areaRect.left - 4, areaRect.right - buttonRect.right - 4));
+                    var verticalRoom = Math.max(0, Math.min(14, buttonRect.top - areaRect.top - 4, areaRect.bottom - buttonRect.bottom - 4));
+                    var x = Math.round(Math.random() * horizontalRoom * 2 - horizontalRoom);
+                    var y = Math.round(Math.random() * verticalRoom * 2 - verticalRoom);
                     targetBtn.style.transform = `translate(${x}px, ${y}px)`;
                 }
 
