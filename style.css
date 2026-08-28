@@ -681,3 +681,30 @@ p a:hover {
     color: var(--theme-color, #ff4a75);
     font-size: 14px;
 }
+
+/* Receiver theme overrides legacy defaults below. */
+.receiver-page,
+.receiver-flow {
+    color: var(--theme-color, #ff4a75);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--theme-color, #ff4a75) 22%, white), #ffffff);
+}
+
+.receiver-page .header_text,
+.receiver-page p,
+.receiver-page p a,
+.receiver-flow .header_text,
+.receiver-flow p,
+.receiver-flow p a {
+    color: var(--theme-color, #ff4a75);
+}
+
+.receiver-page .btn,
+.receiver-flow .btn {
+    background-color: var(--theme-color, #ff4a75);
+    color: #ffffff;
+}
+
+.receiver-page #noButton:disabled {
+    opacity: 1;
+    filter: none;
+}

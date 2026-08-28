@@ -1,21 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Birthday Prank</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body class="receiver-page">
-    <div class="container">
-        <div>
-            <h1 class="header_text">Is it your birthday today? 🎂</h1>
-        </div>
-        <p>
-            <a href="https://github.com">@coderrvs-pixel</a>
-        </p>
+    <main class="container">
+        <h1 class="header_text">Is it your birthday today? 🎂</h1>
+        <p><a href="https://github.com">@coderrvs-pixel</a></p>
         <div class="gif_container">
             <div class="cake receiver-cake" role="img" aria-label="Birthday cake">
                 <div class="candle"><i></i></div>
@@ -24,49 +18,38 @@
                 <div class="plate"></div>
             </div>
         </div>
-        <div class="buttons">
-            <button class="btn" id="yesButton" onmouseover="moveButton()" onclick="attemptYes()">Yes</button>
-            <button class="btn" id="noButton" onclick="nextPage()">No</button>
-
-            <script>
-                let yesAttempts = 0;
-                const noButton = document.getElementById("noButton");
-                noButton.disabled = true;
-
-                function attemptYes() {
-                    yesAttempts += 1;
-                    moveButton();
-                    if (yesAttempts >= 7) {
-                        noButton.disabled = false;
-                    }
-                }
-
-                function nextPage() {
-                    if (yesAttempts < 7) return;
-                    window.location.href = "yes.html" + window.location.search;
-                }
-
-                function moveButton() {
-                    var targetBtn = document.getElementById("yesButton");
-                    var buttonArea = targetBtn.parentElement;
-
-                    targetBtn.style.transform = "none";
-                    var buttonRect = targetBtn.getBoundingClientRect();
-                    var areaRect = buttonArea.getBoundingClientRect();
-                    var horizontalRoom = Math.max(0, Math.min(130, buttonRect.left - areaRect.left - 4, areaRect.right - buttonRect.right - 4));
-                    var verticalRoom = Math.max(0, Math.min(42, buttonRect.top - areaRect.top - 4, areaRect.bottom - buttonRect.bottom - 4));
-                    var x = Math.round(Math.random() * horizontalRoom * 2 - horizontalRoom);
-                    var y = Math.round(Math.random() * verticalRoom * 2 - verticalRoom);
-                    targetBtn.style.transform = `translate(${x}px, ${y}px)`;
-                }
-
-                const selectedColor = new URLSearchParams(window.location.search).get("color");
-                if (/^#[0-9a-f]{6}$/i.test(selectedColor || "")) {
-                    document.documentElement.style.setProperty("--theme-color", selectedColor);
-                }
-            </script>
+        <div class="buttons receiver-buttons">
+            <button class="btn" id="yesButton" type="button">Yes</button>
+            <button class="btn" id="noButton" type="button">No</button>
         </div>
-    </div>
-</body>
+    </main>
+    <script src="script.js"></script>
+    <script>
+        let yesAttempts = 0;
+        const yesButton = document.getElementById("yesButton");
+        const noButton = document.getElementById("noButton");
+        noButton.disabled = true;
 
+        function moveButton() {
+            const padding = 16;
+            const maxX = Math.max(padding, window.innerWidth - yesButton.offsetWidth - padding);
+            const maxY = Math.max(padding, window.innerHeight - yesButton.offsetHeight - padding);
+            yesButton.style.position = "fixed";
+            yesButton.style.left = `${Math.round(padding + Math.random() * (maxX - padding))}px`;
+            yesButton.style.top = `${Math.round(padding + Math.random() * (maxY - padding))}px`;
+        }
+
+        function attemptYes() {
+            yesAttempts += 1;
+            moveButton();
+            if (yesAttempts >= 7) noButton.disabled = false;
+        }
+
+        yesButton.addEventListener("mouseenter", moveButton);
+        yesButton.addEventListener("click", attemptYes);
+        noButton.addEventListener("click", () => {
+            if (yesAttempts >= 7) window.location.href = "yes.html" + window.location.search;
+        });
+    </script>
+</body>
 </html>
