@@ -1,55 +1,107 @@
-let clickAudioContext;
-
-function applyCardSettings() {
-    const params = new URLSearchParams(window.location.search);
-    const color = params.get("color");
-    if (color && /^#[0-9a-f]{6}$/i.test(color)) {
-        const red = parseInt(color.slice(1, 3), 16) / 255;
-        const green = parseInt(color.slice(3, 5), 16) / 255;
-        const blue = parseInt(color.slice(5, 7), 16) / 255;
-        const maximum = Math.max(red, green, blue);
-        const minimum = Math.min(red, green, blue);
-        const lightness = (maximum + minimum) / 2;
-        const saturation = maximum === minimum ? 0 : (maximum - minimum) / (1 - Math.abs(2 * lightness - 1));
-        let hue = 0;
-        if (maximum !== minimum) {
-            const difference = maximum - minimum;
-            if (maximum === red) hue = 60 * (((green - blue) / difference) % 6);
-            else if (maximum === green) hue = 60 * ((blue - red) / difference + 2);
-            else hue = 60 * ((red - green) / difference + 4);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container birthday-card">
+        <p class="eyebrow">A little birthday surprise</p>
+        <h1 class="header_text" id="happyText">Happy Birthday!</h1>
+        <p class="blow-instruction">Blow your cake!</p>
+        <div class="gif_container">
+            <div class="cake" id="birthdayCake" role="img" aria-label="Pink birthday cake"><span class="cake-decor"></span><span class="candle-flames" aria-hidden="true"><i></i><i></i><i></i></span></div>
+        </div>
+        <section class="receiver-card" id="receiverCard" hidden>
+            <button class="message-card" id="messageCard" type="button">Open your birthday card</button>
+        </section>
+        <button class="btn card-link" id="blowButton" type="button">Blow a candle</button>
+    </main>
+    <script>
+        const celebrantName = new URLSearchParams(window.location.search).get("name");
+        const finalParams = new URLSearchParams(window.location.search);
+        if (celebrantName) document.getElementById("happyText").textContent = `Happy Birthday, ${celebrantName}!`;
+        if (finalParams.get("blown") === "1") {
+            document.getElementById("birthdayCake").classList.add("blown-out");
+            document.querySelector(".blow-instruction").textContent = "Make a wish!";
+            document.getElementById("receiverCard").hidden = false;
+            document.getElementById("blowButton").textContent = "Candles blown out";
         }
-        if (hue < 0) hue += 360;
-        const monochrome = (nextLightness) => `hsl(${hue} ${Math.round(saturation * 100)}% ${nextLightness}%)`;
-        document.documentElement.style.setProperty("--accent", color);
-        document.documentElement.style.setProperty("--accent-soft", `${color}33`);
-        document.documentElement.style.setProperty("--accent-dark", monochrome(Math.max(18, lightness * 100 - 18)));
-        document.documentElement.style.setProperty("--accent-light", monochrome(Math.min(88, lightness * 100 + 18)));
-        document.documentElement.style.setProperty("--accent-pale", monochrome(96));
-    }
+        let audioContext;
+        let songTimer;
 
-    const question = params.get("question");
-    const questionText = document.getElementById("questionText");
-    if (question && questionText) questionText.textContent = question;
-}
+        function playBirthdaySong() {
+            audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+            if (audioContext.state === "suspended") audioContext.resume();
+            window.clearTimeout(songTimer);
+            const melody = [
+                [392, 0.32], [392, 0.32], [440, 0.64], [392, 0.64], [523.25, 0.64], [493.88, 1.2],
+                [392, 0.32], [392, 0.32], [440, 0.64], [392, 0.64], [587.33, 0.64], [523.25, 1.2],
+                [392, 0.32], [392, 0.32], [784, 0.64], [659.25, 0.64], [523.25, 0.64], [493.88, 0.64], [440, 1.2],
+                [698.46, 0.32], [698.46, 0.32], [659.25, 0.64], [523.25, 0.64], [587.33, 0.64], [523.25, 1.2]
+            ];
+            const start = audioContext.currentTime + 0.05;
+            let offset = 0;
 
-function playClickSound() {
-    clickAudioContext = clickAudioContext || new (window.AudioContext || window.webkitAudioContext)();
-    if (clickAudioContext.state === "suspended") clickAudioContext.resume();
+            melody.forEach(([frequency, duration]) => {
+                const oscillator = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                oscillator.frequency.value = frequency;
+                oscillator.type = "triangle";
+                gain.gain.setValueAtTime(0.0001, start + offset);
+                gain.gain.exponentialRampToValueAtTime(0.16, start + offset + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.0001, start + offset + duration - 0.03);
+                oscillator.connect(gain).connect(audioContext.destination);
+                oscillator.start(start + offset);
+                oscillator.stop(start + offset + duration);
+                offset += duration;
+            });
+            songTimer = window.setTimeout(playBirthdaySong, offset * 1000 + 200);
+        }
 
-    const oscillator = clickAudioContext.createOscillator();
-    const gain = clickAudioContext.createGain();
-    const now = clickAudioContext.currentTime;
-    oscillator.frequency.setValueAtTime(720, now);
-    oscillator.frequency.exponentialRampToValueAtTime(420, now + 0.06);
-    gain.gain.setValueAtTime(0.08, now);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
-    oscillator.connect(gain).connect(clickAudioContext.destination);
-    oscillator.start(now);
-    oscillator.stop(now + 0.06);
-}
+        async function listenForBlow() {
+            const blowButton = document.getElementById("blowButton");
+            try {
+                audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+                if (audioContext.state === "suspended") await audioContext.resume();
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const microphone = audioContext.createMediaStreamSource(stream);
+                const analyser = audioContext.createAnalyser();
+                const volumeData = new Uint8Array(analyser.fftSize);
+                microphone.connect(analyser);
+                blowButton.textContent = "Blow now!";
 
-document.addEventListener("click", (event) => {
-    if (event.target.closest("button, a")) playClickSound();
-});
+                function checkBreath() {
+                    analyser.getByteTimeDomainData(volumeData);
+                    const volume = volumeData.reduce((total, value) => total + Math.abs(value - 128), 0) / volumeData.length;
+                    if (volume > 18) {
+                        document.getElementById("birthdayCake").classList.add("blown-out");
+                        document.querySelector(".blow-instruction").textContent = "Make a wish!";
+                        document.getElementById("receiverCard").hidden = false;
+                        stream.getTracks().forEach((track) => track.stop());
+                        blowButton.textContent = "Candles blown out";
+                        return;
+                    }
+                    requestAnimationFrame(checkBreath);
+                }
+                checkBreath();
+            } catch (error) {
+                blowButton.textContent = "Microphone unavailable";
+            }
+        }
 
-applyCardSettings();
+        document.getElementById("blowButton").addEventListener("click", listenForBlow);
+        document.getElementById("messageCard").addEventListener("click", () => {
+            const cardParams = new URLSearchParams(window.location.search);
+            cardParams.set("blown", "1");
+            window.location.href = "card.html?" + cardParams;
+        });
+        window.addEventListener("load", () => {
+            playBirthdaySong();
+        }, { once: true });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
