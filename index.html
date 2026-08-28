@@ -33,7 +33,10 @@
                     yesAttempts += 1;
                     moveButton();
                     if (yesAttempts >= 7) {
-                        document.getElementById("noButton").disabled = false;
+                        const noButton = document.getElementById("noButton");
+                        noButton.disabled = false;
+                        noButton.removeAttribute("disabled");
+                        noButton.textContent = "No - unlocked";
                     }
                 }
 

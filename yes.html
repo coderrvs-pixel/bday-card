@@ -36,6 +36,8 @@
             if (yesScale <= 0.05) {
                 yesBtn.style.display = "none";
                 noBtn.disabled = false;
+                noBtn.removeAttribute("disabled");
+                noBtn.textContent = "No - unlocked";
                 return;
             }
             yesBtn.style.transform = `scale(${yesScale})`;
