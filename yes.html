@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
+    <body class="receiver-flow">
     <div class="container">
         <div>
             <!-- Header text changed to the step-2 progressive prompt -->
@@ -47,15 +47,16 @@
                 heading.innerText = 'Okay fine, you can click "Yes" now! 🥳';
                 noBtn.style.display = "none"; // Erase No button completely
                 yesBtn.style.transform = "scale(1.5)"; // Return Yes to easy clear size
-                yesBtn.style.position = "static"; 
+                yesBtn.style.position = "static";
             }
         }
 
         function nextPage() {
             // Direct pass redirection to final file layout
-            window.location.href = "final.html";
+            window.location.href = "final.html" + window.location.search;
         }
     </script>
+    <script src="script.js"></script>
 </body>
 
 </html>

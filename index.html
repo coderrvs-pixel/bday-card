@@ -8,58 +8,56 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
+<body class="receiver-page">
     <div class="container">
         <div>
-            <!-- Question updated exactly to your birthday concept -->
             <h1 class="header_text">Is it your birthday today? 🎂</h1>
         </div>
         <p>
-            <!-- Social tag updated to align with your personal repository profile -->
             <a href="https://github.com">@coderrvs-pixel</a>
         </p>
         <div class="gif_container">
-            <img src="https://i.postimg.cc/pdNqPxx1/milk-and-mocha-cute.gif" alt="Cute animated illustration" />
+            <div class="cake receiver-cake" role="img" aria-label="Birthday cake">
+                <div class="candle"><i></i></div>
+                <div class="icing"></div>
+                <div class="cake_body"></div>
+                <div class="plate"></div>
+            </div>
         </div>
         <div class="buttons">
-            <!-- The Yes button is now the target element running away on hover and click -->
             <button class="btn" id="yesButton" onmouseover="moveButton()" onclick="attemptYes()">Yes</button>
-            <!-- The No button stays completely still and redirects to page 2 (yes.html) -->
             <button class="btn" id="noButton" onclick="nextPage()">No</button>
 
             <script>
                 let yesAttempts = 0;
                 const noButton = document.getElementById("noButton");
-                noButton.style.pointerEvents = "none";
+                noButton.disabled = true;
 
                 function attemptYes() {
                     yesAttempts += 1;
                     moveButton();
                     if (yesAttempts >= 7) {
-                        noButton.style.pointerEvents = "auto";
+                        noButton.disabled = false;
                     }
                 }
 
                 function nextPage() {
                     if (yesAttempts < 7) return;
-                    window.location.href = "yes.html";
+                    window.location.href = "yes.html" + window.location.search;
                 }
 
                 function moveButton() {
                     var targetBtn = document.getElementById("yesButton");
-                    
-                    // Essential layout assignment to allow the button to break out and teleport freely
-                    targetBtn.style.position = "absolute";
 
-                    var x =
-                        Math.random() *
-                        (window.innerWidth - targetBtn.offsetWidth);
-                    var y =
-                        Math.random() *
-                        (window.innerHeight - targetBtn.offsetHeight);
-                    
-                    targetBtn.style.left = `${x}px`;
-                    targetBtn.style.top = `${y}px`;
+                    // Nudge the button around its original position without leaving the viewport.
+                    var x = Math.round(Math.random() * 24 - 12);
+                    var y = Math.round(Math.random() * 16 - 8);
+                    targetBtn.style.transform = `translate(${x}px, ${y}px)`;
+                }
+
+                const selectedColor = new URLSearchParams(window.location.search).get("color");
+                if (/^#[0-9a-f]{6}$/i.test(selectedColor || "")) {
+                    document.documentElement.style.setProperty("--theme-color", selectedColor);
                 }
             </script>
         </div>

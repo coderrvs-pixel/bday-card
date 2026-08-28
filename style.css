@@ -1,5 +1,3 @@
-@import url('https://googleapis.com');
-
 body {
     display: flex;
     justify-content: center;
@@ -9,6 +7,294 @@ body {
     /* Swapped from neon blue to birthday cake pink gradient */
     background: linear-gradient(#ffccd5, #ffb3c1);
     overflow: hidden;
+}
+
+/* Sender setup keeps the form comfortably portrait-oriented and scrollable. */
+.setup-page {
+    min-height: 100vh;
+    height: auto;
+    box-sizing: border-box;
+    padding: 32px 18px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #f4f1eb;
+    background-image: radial-gradient(#d6d1c8 1px, transparent 1px);
+    background-size: 18px 18px;
+    color: #111111;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.setup-page::before,
+.setup-page::after {
+    position: fixed;
+    z-index: 0;
+    width: 120px;
+    height: 120px;
+    border: 2px solid #111111;
+    border-radius: 58% 42% 55% 45%;
+    content: "";
+    opacity: 0.08;
+    transform: rotate(18deg);
+}
+
+.setup-page::before {
+    top: 14%;
+    left: -45px;
+}
+
+.setup-page::after {
+    right: -45px;
+    bottom: 12%;
+    transform: rotate(-22deg);
+}
+
+.setup-page .setup-card {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 540px);
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: clamp(28px, 7vw, 54px) clamp(22px, 7vw, 60px);
+    border: 2px solid #111111;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 10px 10px 0 #111111;
+}
+
+.setup-page .header_text {
+    color: #111111;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(34px, 9vw, 54px);
+    line-height: 1;
+    text-align: left;
+}
+
+.setup-page .eyebrow {
+    color: #111111;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.setup-form {
+    display: grid;
+    gap: 12px;
+}
+
+.setup-form label {
+    margin-top: 10px;
+    color: #111111;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.setup-form input:not([type="color"]),
+.setup-form textarea,
+.link-result input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #111111;
+    border-radius: 0;
+    padding: 13px;
+    background: #ffffff;
+    color: #111111;
+    font: 16px Georgia, "Times New Roman", serif;
+}
+
+.setup-form input[type="color"] {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #111111;
+    padding: 3px;
+    background: #ffffff;
+}
+
+.setup-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.setup-page .btn {
+    width: 100%;
+    margin: 16px 0 0;
+    border: 2px solid #111111;
+    border-radius: 0;
+    background: #111111;
+    color: #ffffff;
+    box-shadow: none;
+}
+
+.setup-page .btn:hover {
+    background: #ffffff;
+    color: #111111;
+}
+
+.link-result {
+    margin-top: 30px;
+    border-top: 1px solid #111111;
+    padding-top: 18px;
+}
+
+.link-result p {
+    color: #111111;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 14px;
+    text-align: left;
+}
+
+.balloon {
+    position: fixed;
+    z-index: 0;
+    width: 58px;
+    height: 74px;
+    border: 2px solid #111111;
+    border-radius: 50% 50% 45% 45%;
+    background: #ffffff;
+    box-shadow: inset -9px -8px 0 rgba(17, 17, 17, 0.08);
+}
+
+.balloon::after {
+    position: absolute;
+    top: 73px;
+    left: 28px;
+    width: 1px;
+    height: 115px;
+    background: #111111;
+    content: "";
+}
+
+.balloon-one { top: 5%; left: 5%; transform: rotate(-12deg); }
+.balloon-two { top: 17%; right: 7%; background: #111111; transform: rotate(14deg); }
+.balloon-three { right: 4%; bottom: 7%; transform: rotate(-8deg); }
+.balloon-four { bottom: 2%; left: 8%; background: #111111; transform: rotate(11deg); }
+
+.receiver-page #yesButton,
+.receiver-page #noButton {
+    position: relative;
+    margin-top: 4px;
+}
+
+.receiver-page #yesButton {
+    margin-right: 0;
+}
+
+.receiver-page #noButton {
+    margin-left: 0;
+}
+
+.receiver-page .buttons {
+    width: min(100%, 320px);
+    box-sizing: border-box;
+    gap: 10px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.receiver-page .btn {
+    margin: 4px 0;
+}
+
+.receiver-page .header_text,
+.receiver-page p,
+.receiver-page p a {
+    color: var(--theme-color, #ff4a75);
+}
+
+.receiver-page {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--theme-color, #ff4a75) 18%, white), #ffffff);
+}
+
+.receiver-flow .header_text,
+.receiver-flow p,
+.receiver-flow p a {
+    color: var(--theme-color, #ff4a75);
+}
+
+.receiver-flow {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--theme-color, #ff4a75) 18%, white), #ffffff);
+}
+
+.receiver-page .receiver-cake {
+    position: relative;
+    width: 220px;
+    height: 185px;
+    margin: 24px auto 4px;
+}
+
+.receiver-page .receiver-cake .plate {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 22px;
+    border: 3px solid #111111;
+    border-radius: 50%;
+    background: #ffffff;
+}
+
+.receiver-page .receiver-cake .cake_body {
+    position: absolute;
+    right: 20px;
+    bottom: 16px;
+    left: 20px;
+    height: 78px;
+    border: 3px solid #111111;
+    border-radius: 0 0 16px 16px;
+    background: var(--theme-color, #ff4a75);
+}
+
+.receiver-page .receiver-cake .icing {
+    position: absolute;
+    right: 15px;
+    bottom: 75px;
+    left: 15px;
+    height: 48px;
+    border: 3px solid #111111;
+    border-radius: 50% 50% 42% 42%;
+    background: #ffffff;
+}
+
+.receiver-page .receiver-cake .icing::after {
+    position: absolute;
+    right: 10px;
+    bottom: -18px;
+    left: 10px;
+    height: 25px;
+    border-bottom: 3px solid #111111;
+    border-radius: 50%;
+    content: "";
+}
+
+.receiver-page .receiver-cake .candle {
+    position: absolute;
+    bottom: 112px;
+    left: 96px;
+    z-index: 1;
+    width: 28px;
+    height: 48px;
+    border: 3px solid #111111;
+    background: var(--theme-color, #ff4a75);
+}
+
+.receiver-page .receiver-cake .candle i {
+    position: absolute;
+    top: -22px;
+    left: 8px;
+    width: 10px;
+    height: 18px;
+    border: 2px solid #111111;
+    border-radius: 50% 50% 50% 0;
+    background: #ffffff;
+    transform: rotate(45deg);
+}
+
+.receiver-page #noButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
 }
 
 #noButton {
