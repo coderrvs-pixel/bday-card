@@ -1,107 +1,103 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Surprise</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <main class="container birthday-card">
-        <p class="eyebrow">A little birthday surprise</p>
-        <h1 class="header_text" id="happyText">Happy Birthday!</h1>
-        <p class="blow-instruction">Blow your cake!</p>
-        <div class="gif_container">
-            <div class="cake" id="birthdayCake" role="img" aria-label="Pink birthday cake"><span class="cake-decor"></span><span class="candle-flames" aria-hidden="true"><i></i><i></i><i></i></span></div>
-        </div>
-        <section class="receiver-card" id="receiverCard" hidden>
-            <button class="message-card" id="messageCard" type="button">Open your birthday card</button>
-        </section>
-        <button class="btn card-link" id="blowButton" type="button">Blow a candle</button>
-    </main>
-    <script>
-        const celebrantName = new URLSearchParams(window.location.search).get("name");
-        const finalParams = new URLSearchParams(window.location.search);
-        if (celebrantName) document.getElementById("happyText").textContent = `Happy Birthday, ${celebrantName}!`;
-        if (finalParams.get("blown") === "1") {
-            document.getElementById("birthdayCake").classList.add("blown-out");
-            document.querySelector(".blow-instruction").textContent = "Make a wish!";
-            document.getElementById("receiverCard").hidden = false;
-            document.getElementById("blowButton").textContent = "Candles blown out";
-        }
-        let audioContext;
-        let songTimer;
+@import url('https://googleapis.com');
 
-        function playBirthdaySong() {
-            audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
-            if (audioContext.state === "suspended") audioContext.resume();
-            window.clearTimeout(songTimer);
-            const melody = [
-                [392, 0.32], [392, 0.32], [440, 0.64], [392, 0.64], [523.25, 0.64], [493.88, 1.2],
-                [392, 0.32], [392, 0.32], [440, 0.64], [392, 0.64], [587.33, 0.64], [523.25, 1.2],
-                [392, 0.32], [392, 0.32], [784, 0.64], [659.25, 0.64], [523.25, 0.64], [493.88, 0.64], [440, 1.2],
-                [698.46, 0.32], [698.46, 0.32], [659.25, 0.64], [523.25, 0.64], [587.33, 0.64], [523.25, 1.2]
-            ];
-            const start = audioContext.currentTime + 0.05;
-            let offset = 0;
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    /* Swapped from neon blue to birthday cake pink gradient */
+    background: linear-gradient(#ffccd5, #ffb3c1);
+    overflow: hidden;
+}
 
-            melody.forEach(([frequency, duration]) => {
-                const oscillator = audioContext.createOscillator();
-                const gain = audioContext.createGain();
-                oscillator.frequency.value = frequency;
-                oscillator.type = "triangle";
-                gain.gain.setValueAtTime(0.0001, start + offset);
-                gain.gain.exponentialRampToValueAtTime(0.16, start + offset + 0.03);
-                gain.gain.exponentialRampToValueAtTime(0.0001, start + offset + duration - 0.03);
-                oscillator.connect(gain).connect(audioContext.destination);
-                oscillator.start(start + offset);
-                oscillator.stop(start + offset + duration);
-                offset += duration;
-            });
-            songTimer = window.setTimeout(playBirthdaySong, offset * 1000 + 200);
-        }
+#noButton {
+    position: absolute;
+    margin-left: 150px;
+    transition: 0.5s;
+    margin-top: 30px;
+}
 
-        async function listenForBlow() {
-            const blowButton = document.getElementById("blowButton");
-            try {
-                audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
-                if (audioContext.state === "suspended") await audioContext.resume();
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                const microphone = audioContext.createMediaStreamSource(stream);
-                const analyser = audioContext.createAnalyser();
-                const volumeData = new Uint8Array(analyser.fftSize);
-                microphone.connect(analyser);
-                blowButton.textContent = "Blow now!";
+#yesButton {
+    position: absolute;
+    margin-right: 150px;
+    margin-top: 30px;
+}
 
-                function checkBreath() {
-                    analyser.getByteTimeDomainData(volumeData);
-                    const volume = volumeData.reduce((total, value) => total + Math.abs(value - 128), 0) / volumeData.length;
-                    if (volume > 18) {
-                        document.getElementById("birthdayCake").classList.add("blown-out");
-                        document.querySelector(".blow-instruction").textContent = "Make a wish!";
-                        document.getElementById("receiverCard").hidden = false;
-                        stream.getTracks().forEach((track) => track.stop());
-                        blowButton.textContent = "Candles blown out";
-                        return;
-                    }
-                    requestAnimationFrame(checkBreath);
-                }
-                checkBreath();
-            } catch (error) {
-                blowButton.textContent = "Microphone unavailable";
-            }
-        }
+.header_text {
+    font-family: "Nunito", sans-serif;
+    font-size: 50px;
+    font-weight: 900;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #ff4a75; /* Strawberry frosting pink accent text */
+}
 
-        document.getElementById("blowButton").addEventListener("click", listenForBlow);
-        document.getElementById("messageCard").addEventListener("click", () => {
-            const cardParams = new URLSearchParams(window.location.search);
-            cardParams.set("blown", "1");
-            window.location.href = "card.html?" + cardParams;
-        });
-        window.addEventListener("load", () => {
-            playBirthdaySong();
-        }, { once: true });
-    </script>
-    <script src="script.js"></script>
-</body>
-</html>
+.text {
+    font-family: "Nunito", sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 20px;
+    position: relative; /* Secures absolute child buttons bounds */
+}
+
+.btn {
+    /* Cake theme frosting base color palette */
+    background-color: #ff4a75;
+    color: white;
+    font-weight: 700;
+    font-family: "Nunito", sans-serif;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px; /* Bubbly rounded aesthetic */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.15s ease-out;
+    box-shadow: 0 4px 10px rgba(255, 74, 117, 0.3);
+}
+
+.btn:hover {
+    background-color: #ffffff;
+    color: #ff4a75;
+}
+
+.gif_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    color: #ff4a75;
+    text-align: center;
+    margin-top: 15px;
+}
+
+p a {
+    color: #ff4a75;
+    font-family: "Nunito", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    opacity: 0.5;
+    text-decoration: none;
+}
+
+p a:hover {
+    opacity: 1;
+}
