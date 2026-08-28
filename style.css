@@ -185,6 +185,11 @@ body {
     transform: none !important;
 }
 
+.escape-page #noButton[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
 .static-buttons {
     gap: 72px;
     margin-left: 0;
@@ -219,6 +224,11 @@ body {
 .btn:hover {
     background-color: #ffffff;
     color: var(--accent);
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
 }
 
 .gif_container {
