@@ -24,6 +24,7 @@
     <script>
         let yesAttempts = 0;
         let screenClicks = 0;
+        let moveTimer;
         const yesButton = document.getElementById("yesButton");
         const noButton = document.getElementById("noButton");
         noButton.disabled = true;
@@ -31,25 +32,37 @@
         document.addEventListener("click", (event) => {
             if (event.target.closest("button, a")) return;
             screenClicks += 1;
-            if (screenClicks >= 7) noButton.disabled = false;
+            unlockNoButton();
         });
 
         function moveButton() {
             const padding = 16;
             const maxX = Math.max(padding, window.innerWidth - yesButton.offsetWidth - padding);
             const maxY = Math.max(padding, window.innerHeight - yesButton.offsetHeight - padding);
+            const noRect = noButton.getBoundingClientRect();
+            let x = padding;
+            let y = padding;
+            for (let attempt = 0; attempt < 20; attempt += 1) {
+                x = Math.round(padding + Math.random() * (maxX - padding));
+                y = Math.round(padding + Math.random() * (maxY - padding));
+                if (x + yesButton.offsetWidth < noRect.left - 12 || x > noRect.right + 12 || y + yesButton.offsetHeight < noRect.top - 12 || y > noRect.bottom + 12) break;
+            }
             yesButton.style.position = "fixed";
-            yesButton.style.left = `${Math.round(padding + Math.random() * (maxX - padding))}px`;
-            yesButton.style.top = `${Math.round(padding + Math.random() * (maxY - padding))}px`;
+            yesButton.style.left = `${x}px`;
+            yesButton.style.top = `${y}px`;
+        }
+
+        function unlockNoButton() {
+            if (yesAttempts + screenClicks >= 7) noButton.disabled = false;
         }
 
         function attemptYes() {
             yesAttempts += 1;
-            moveButton();
-            if (yesAttempts >= 7) noButton.disabled = false;
+            unlockNoButton();
+            window.clearTimeout(moveTimer);
+            moveTimer = window.setTimeout(moveButton, 500);
         }
 
-        yesButton.addEventListener("mouseenter", moveButton);
         yesButton.addEventListener("click", attemptYes);
         noButton.addEventListener("click", () => {
             if (yesAttempts >= 7) window.location.href = "yes.html" + window.location.search;
