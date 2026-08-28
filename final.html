@@ -1,65 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Happy Birthday!</title>
-	<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+<body>
+    <main class="container birthday-card">
+        <p class="eyebrow">A little birthday surprise</p>
+        <h1 class="header_text" id="happyText">Happy Birthday!</h1>
+        <p class="blow-instruction">Blow your cake!</p>
+        <div class="gif_container">
+            <div class="cake" id="birthdayCake" role="img" aria-label="Pink birthday cake"><span class="cake-decor"></span><span class="candle-flames" aria-hidden="true"><i></i><i></i><i></i></span></div>
+        </div>
+        <section class="receiver-card" id="receiverCard" hidden>
+            <button class="message-card" id="messageCard" type="button">Open your birthday card</button>
+        </section>
+        <button class="btn card-link" id="blowButton" type="button">Blow a candle</button>
+    </main>
+    <script>
+        const celebrantName = new URLSearchParams(window.location.search).get("name");
+        const finalParams = new URLSearchParams(window.location.search);
+        if (celebrantName) document.getElementById("happyText").textContent = `Happy Birthday, ${celebrantName}!`;
+        if (finalParams.get("blown") === "1") {
+            document.getElementById("birthdayCake").classList.add("blown-out");
+            document.querySelector(".blow-instruction").textContent = "Make a wish!";
+            document.getElementById("receiverCard").hidden = false;
+            document.getElementById("blowButton").textContent = "Candles blown out";
+        }
+        let audioContext;
+        let songTimer;
 
-<body class="receiver_page">
-	<main class="birthday_panel">
-		<p class="eyebrow">A birthday surprise for you</p>
-		<h1 class="header_text" id="birthdayHeadline">Happy Birthday!</h1>
-		<p class="text">Make a wish and blow out your candles.</p>
+        function playBirthdaySong() {
+            audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+            if (audioContext.state === "suspended") audioContext.resume();
+            window.clearTimeout(songTimer);
+            const melody = [
+                [392, 0.32], [392, 0.32], [440, 0.64], [392, 0.64], [523.25, 0.64], [493.88, 1.2],
+                [392, 0.32], [392, 0.32], [440, 0.64], [392, 0.64], [587.33, 0.64], [523.25, 1.2],
+                [392, 0.32], [392, 0.32], [784, 0.64], [659.25, 0.64], [523.25, 0.64], [493.88, 0.64], [440, 1.2],
+                [698.46, 0.32], [698.46, 0.32], [659.25, 0.64], [523.25, 0.64], [587.33, 0.64], [523.25, 1.2]
+            ];
+            const start = audioContext.currentTime + 0.05;
+            let offset = 0;
 
-		<div class="cake" aria-label="Birthday cake with number candles">
-			<div id="candles" class="candles"></div>
-			<div class="cake_top"></div>
-			<div class="cake_body"></div>
-			<div class="cake_plate"></div>
-		</div>
+            melody.forEach(([frequency, duration]) => {
+                const oscillator = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                oscillator.frequency.value = frequency;
+                oscillator.type = "triangle";
+                gain.gain.setValueAtTime(0.0001, start + offset);
+                gain.gain.exponentialRampToValueAtTime(0.16, start + offset + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.0001, start + offset + duration - 0.03);
+                oscillator.connect(gain).connect(audioContext.destination);
+                oscillator.start(start + offset);
+                oscillator.stop(start + offset + duration);
+                offset += duration;
+            });
+            songTimer = window.setTimeout(playBirthdaySong, offset * 1000 + 200);
+        }
 
-		<p id="ageMessage" class="age_message"></p>
-		<p id="senderMessage" class="sender_message"></p>
-		<button id="wishButton" class="btn" type="button">Blow out the candles</button>
-	</main>
+        async function listenForBlow() {
+            const blowButton = document.getElementById("blowButton");
+            try {
+                audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+                if (audioContext.state === "suspended") await audioContext.resume();
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const microphone = audioContext.createMediaStreamSource(stream);
+                const analyser = audioContext.createAnalyser();
+                const volumeData = new Uint8Array(analyser.fftSize);
+                microphone.connect(analyser);
+                blowButton.textContent = "Blow now!";
 
-	<script>
-		const candles = document.getElementById("candles");
-		const ageMessage = document.getElementById("ageMessage");
-		const wishButton = document.getElementById("wishButton");
-		const cardParams = new URLSearchParams(window.location.search);
-		const ageFromLink = cardParams.get("age");
-		const celebrantName = cardParams.get("name") || cardParams.get("celebrantName") || localStorage.getItem("celebrantName");
-		const senderName = cardParams.get("senderName") || localStorage.getItem("senderName");
-		const message = cardParams.get("message") || "Wishing you a day full of love, laughter, and lots of cake.";
-		const age = Number(ageFromLink || localStorage.getItem("celebrantAge"));
-		const displayedAge = Number.isInteger(age) && age >= 1 && age <= 120 ? age : 0;
+                function checkBreath() {
+                    analyser.getByteTimeDomainData(volumeData);
+                    const volume = volumeData.reduce((total, value) => total + Math.abs(value - 128), 0) / volumeData.length;
+                    if (volume > 18) {
+                        document.getElementById("birthdayCake").classList.add("blown-out");
+                        document.querySelector(".blow-instruction").textContent = "Make a wish!";
+                        document.getElementById("receiverCard").hidden = false;
+                        stream.getTracks().forEach((track) => track.stop());
+                        blowButton.textContent = "Candles blown out";
+                        return;
+                    }
+                    requestAnimationFrame(checkBreath);
+                }
+                checkBreath();
+            } catch (error) {
+                blowButton.textContent = "Microphone unavailable";
+            }
+        }
 
-		if (!displayedAge) {
-			window.location.href = "setup.html";
-		} else {
-			document.getElementById("birthdayHeadline").textContent = `Happy Birthday, ${celebrantName || "birthday star"}!`;
-			String(displayedAge).split("").forEach((digit) => {
-				const candle = document.createElement("span");
-				candle.className = "number_candle";
-				candle.textContent = digit;
-				candle.setAttribute("aria-label", `${digit} candle`);
-				candles.appendChild(candle);
-			});
-			ageMessage.textContent = `Celebrating ${displayedAge} wonderful years`;
-			document.getElementById("senderMessage").textContent = senderName ? `With love from ${senderName}` : "";
-			document.documentElement.style.setProperty("--accent", cardParams.get("color") || "#ff4a75");
-		}
-
-		wishButton.addEventListener("click", () => {
-			document.body.classList.add("candles_out");
-			wishButton.textContent = "Wish made!";
-			wishButton.disabled = true;
-		});
-	</script>
+        document.getElementById("blowButton").addEventListener("click", listenForBlow);
+        document.getElementById("messageCard").addEventListener("click", () => {
+            const cardParams = new URLSearchParams(window.location.search);
+            cardParams.set("blown", "1");
+            window.location.href = "card.html?" + cardParams;
+        });
+        window.addEventListener("load", () => {
+            playBirthdaySong();
+        }, { once: true });
+    </script>
+    <script src="script.js"></script>
 </body>
-
 </html>
