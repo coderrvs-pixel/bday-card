@@ -708,3 +708,73 @@ p a:hover {
     opacity: 1;
     filter: none;
 }
+
+.receiver-flow .cake-candles {
+    position: absolute;
+    top: 42px;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 34px;
+}
+
+.receiver-flow .cake-candles i {
+    display: block;
+    width: 14px;
+    height: 48px;
+    border: 3px solid var(--theme-color, #ff4a75);
+    border-radius: 5px 5px 2px 2px;
+    background: var(--theme-color, #ff4a75);
+    box-shadow: inset 4px 0 0 rgba(255, 255, 255, 0.35);
+}
+
+.receiver-flow .candle-flames {
+    top: 20px;
+    z-index: 3;
+}
+
+.receiver-flow .receiver-card {
+    display: grid;
+    place-items: center;
+    margin: 22px auto 8px;
+}
+
+.receiver-flow .receiver-card[hidden] {
+    display: none;
+}
+
+.receiver-flow .message-card {
+    position: relative;
+    border: 3px solid var(--theme-color, #ff4a75);
+    border-radius: 14px;
+    padding: 16px 24px 16px 48px;
+    background: #ffffff;
+    color: var(--theme-color, #ff4a75);
+    font: 700 16px "Trebuchet MS", sans-serif;
+    cursor: pointer;
+    box-shadow: 6px 6px 0 color-mix(in srgb, var(--theme-color, #ff4a75) 35%, transparent);
+}
+
+.receiver-flow .message-card::before {
+    position: absolute;
+    top: 50%;
+    left: 19px;
+    width: 16px;
+    height: 12px;
+    border: 2px solid var(--theme-color, #ff4a75);
+    border-radius: 2px;
+    content: "";
+    transform: translateY(-50%);
+}
+
+.receiver-flow .message-card:hover {
+    background: var(--theme-color, #ff4a75);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.receiver-flow .card-link {
+    min-width: 180px;
+}
