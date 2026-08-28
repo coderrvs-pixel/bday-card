@@ -93,6 +93,7 @@ p a { color: var(--theme-color); font-weight: 700; text-decoration: none; }
 
 .receiver-page .receiver-buttons { width: min(100%, 360px); }
 .receiver-page #yesButton { position: fixed; z-index: 4; }
+.receiver-page #noButton { position: fixed; right: 24px; bottom: 24px; z-index: 5; margin: 0; }
 .receiver-page #noButton:disabled { opacity: 1; cursor: default; }
 
 .receiver-present { position: relative; width: min(68vw, 230px); height: 180px; margin: 22px auto; }
