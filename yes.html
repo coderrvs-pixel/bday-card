@@ -19,25 +19,25 @@
         </div>
         <div class="buttons">
             <button class="btn" id="yesButton" onclick="shrinkYes()">Yes</button>
-            <button class="btn" id="noButton" type="button" disabled onclick="nextPage()">No</button>
+            <button class="btn" id="noButton" type="button" onclick="nextPage()">No</button>
         </div>
     </div>
 
     <script>
         let yesScale = 1.0;
         let noScale = 1.0;
+        const noButton = document.getElementById("noButton");
+        noButton.style.pointerEvents = "none";
 
         function shrinkYes() {
             const yesBtn = document.getElementById("yesButton");
-            const noBtn = document.getElementById("noButton");
+            const noBtn = noButton;
             yesScale -= 0.2;
             noScale += 0.2;
             noBtn.style.transform = `scale(${noScale})`;
             if (yesScale <= 0.05) {
                 yesBtn.style.display = "none";
-                noBtn.disabled = false;
-                noBtn.removeAttribute("disabled");
-                noBtn.textContent = "No - unlocked";
+                noBtn.style.pointerEvents = "auto";
                 return;
             }
             yesBtn.style.transform = `scale(${yesScale})`;
