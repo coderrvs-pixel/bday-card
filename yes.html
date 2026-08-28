@@ -2,21 +2,49 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
     <div class="container">
         <div>
-            <h1 class="header_text">Yeeyy ! Finally</h1>
+            <!-- Header text changed to the step-2 progressive prompt -->
+            <h1 class="header_text" id="headlineText">Just kidding, click yes now.</h1>
         </div>
         <div class="gif_container">
-            <img src="https://i.postimg.cc/wTDG30TB/yes.gif" alt="Cute animated illustration" />
+            <div class="cake cake-small" role="img" aria-label="Pink birthday cake"><span class="cake-decor"></span><span class="candle-flames" aria-hidden="true"><i></i><i></i><i></i></span></div>
         </div>
-        <button class="btn" id="yesButton" onclick="nextPage()">
-        Let's Fix a Date
-      </button>
+        <div class="buttons">
+            <button class="btn" id="yesButton" onclick="shrinkYes()">Yes</button>
+            <button class="btn" id="noButton" onclick="nextPage()">No</button>
+        </div>
     </div>
+
+    <script>
+        let yesScale = 1.0;
+        let noScale = 1.0;
+
+        function shrinkYes() {
+            const yesBtn = document.getElementById("yesButton");
+            const noBtn = document.getElementById("noButton");
+            yesScale -= 0.2;
+            noScale += 0.2;
+            noBtn.style.transform = `scale(${noScale})`;
+            if (yesScale <= 0.05) {
+                yesBtn.style.display = "none";
+                return;
+            }
+            yesBtn.style.transform = `scale(${yesScale})`;
+        }
+
+        function nextPage() {
+            window.location.href = "okay.html" + window.location.search;
+        }
+    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>

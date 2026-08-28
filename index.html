@@ -2,46 +2,57 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
+<body class="escape-page">
     <div class="container">
         <div>
-            <h1 class="header_text">Do you wanna go out with me?</h1>
+            <h1 class="header_text" id="questionText">Is it your birthday?</h1>
         </div>
-        <p>
-            <a href="https://www.instagram.com/aditya_patil___0122/">@aditya_patil___0122</a>
+            <p class="credit-line">
+            <!-- Social tag updated to align with your personal repository profile -->
+            <a class="credit" href="https://github.com">@coderrvs-pixel</a>
         </p>
         <div class="gif_container">
-            <img src="https://i.postimg.cc/pdNqPxx1/milk-and-mocha-cute.gif" alt="Cute animated illustration" />
+            <div class="cake cake-small" role="img" aria-label="Pink birthday cake"><span class="cake-decor"></span><span class="candle-flames" aria-hidden="true"><i></i><i></i><i></i></span></div>
         </div>
         <div class="buttons">
-            <button class="btn" id="yesButton" onclick="nextPage()">Yes</button>
-            <button class="btn" id="noButton" onmouseover="moveButton()" onclick="moveButton()">
-          No
-        </button>
+            <!-- The Yes button is now the target element running away on hover and click -->
+            <button class="btn" id="yesButton" type="button" onclick="moveButton()">Yes</button>
+            <!-- The No button stays completely still and redirects to page 2 (yes.html) -->
+            <button class="btn" id="noButton" onclick="nextPage()">No</button>
 
             <script>
                 function nextPage() {
-                    window.location.href = "yes.html";
+                    window.location.href = "yes.html" + window.location.search;
                 }
 
                 function moveButton() {
-                    var x =
-                        Math.random() *
-                        (window.innerWidth -
-                            document.getElementById("noButton").offsetWidth);
-                    var y =
-                        Math.random() *
-                        (window.innerHeight -
-                            document.getElementById("noButton").offsetHeight);
-                    document.getElementById("noButton").style.left = `${x}px`;
-                    document.getElementById("noButton").style.top = `${y}px`;
+                    const targetBtn = document.getElementById("yesButton");
+                    targetBtn.style.position = "fixed";
+                    const edgePadding = 12;
+                    const maxX = Math.max(edgePadding, window.innerWidth - targetBtn.offsetWidth - edgePadding);
+                    const maxY = Math.max(edgePadding, window.innerHeight - targetBtn.offsetHeight - edgePadding);
+                    const x = edgePadding + Math.random() * Math.max(0, maxX - edgePadding);
+                    const y = edgePadding + Math.random() * Math.max(0, maxY - edgePadding);
+
+                    targetBtn.style.left = `${x}px`;
+                    targetBtn.style.top = `${y}px`;
                 }
+
+                document.getElementById("yesButton").addEventListener("pointerdown", moveButton);
+                window.addEventListener("resize", () => {
+                    const targetBtn = document.getElementById("yesButton");
+                    if (targetBtn.style.position === "fixed") moveButton();
+                });
             </script>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

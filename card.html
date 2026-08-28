@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="card-page">
+    <main class="container letter-page">
+        <article class="birthday-letter flip-card" id="birthdayCard">
+            <div class="card-face card-front">
+                <p class="card-label">A birthday surprise</p>
+                <h1 class="header_text" id="cardTitle">Happy Birthday!</h1>
+                <p class="card-subtitle">A little card made just for you</p>
+                <div class="letter-cake" aria-hidden="true"></div>
+                <button class="open-card" id="openCard" type="button">Open card</button>
+            </div>
+            <div class="card-face card-back" tabindex="0">
+                <button class="back-arrow" id="backToCake" type="button" aria-label="Back to the blown-out cake">&#8592;</button>
+                <p class="card-label">A message for you</p>
+                <h2 id="backTitle">Happy Birthday!</h2>
+                <p class="typed-message" id="typedMessage"></p>
+            </div>
+        </article>
+    </main>
+    <script src="script.js"></script>
+    <script>
+        const cardName = new URLSearchParams(window.location.search).get("name");
+        if (cardName) {
+            document.getElementById("cardTitle").textContent = `Happy Birthday, ${cardName}!`;
+            document.getElementById("backTitle").textContent = `Happy Birthday, ${cardName}!`;
+        }
+        const typedMessage = document.getElementById("typedMessage");
+        const message = new URLSearchParams(window.location.search).get("message") || "Wishing you a day full of love, laughter, and lots of cake.";
+        document.getElementById("birthdayCard").style.height = `${Math.min(900, Math.max(480, 420 + message.length * 1.25))}px`;
+        let character = 0;
+        function typeNext() {
+            if (character < message.length) {
+                typedMessage.textContent += message[character++];
+                window.setTimeout(typeNext, 45);
+            }
+        }
+        document.getElementById("openCard").addEventListener("click", () => {
+            document.getElementById("birthdayCard").classList.add("is-open");
+            typeNext();
+        });
+
+        document.getElementById("backToCake").addEventListener("click", () => {
+            window.location.href = "final.html?" + new URLSearchParams(window.location.search);
+        });
+
+        const cardAudio = new (window.AudioContext || window.webkitAudioContext)();
+        const cardTone = cardAudio.createOscillator();
+        const cardGain = cardAudio.createGain();
+        cardTone.frequency.value = 660;
+        cardGain.gain.setValueAtTime(0.0001, cardAudio.currentTime);
+        cardGain.gain.exponentialRampToValueAtTime(0.08, cardAudio.currentTime + 0.08);
+        cardGain.gain.exponentialRampToValueAtTime(0.0001, cardAudio.currentTime + 0.5);
+        cardTone.connect(cardGain).connect(cardAudio.destination);
+        cardTone.start();
+        cardTone.stop(cardAudio.currentTime + 0.5);
+    </script>
+</body>
+</html>
