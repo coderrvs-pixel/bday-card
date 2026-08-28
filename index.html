@@ -23,9 +23,16 @@
     <script src="script.js"></script>
     <script>
         let yesAttempts = 0;
+        let screenClicks = 0;
         const yesButton = document.getElementById("yesButton");
         const noButton = document.getElementById("noButton");
         noButton.disabled = true;
+
+        document.addEventListener("click", (event) => {
+            if (event.target.closest("button")) return;
+            screenClicks += 1;
+            if (screenClicks >= 7) noButton.disabled = false;
+        });
 
         function moveButton() {
             const padding = 16;
