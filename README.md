@@ -1,31 +1,35 @@
-# The Unclickable "No" Button!
+# Birthday Cake Card
 
 <div align="center">
-  <img src="https://i.postimg.cc/pdNqPxx1/milk-and-mocha-cute.gif" alt="Cute animated illustration" width="400"/>
+  <strong>Is it your birthday?</strong>
 </div>
 
 <p align="center">
-  A fun and interactive web project that asks a simple question, but with a twist: the "No" button runs away!
+  A playful pink birthday card with a moving Yes button and a growing No button.
 </p>
 
 <p align="center">
-  <a href="https://adityapatil0122.github.io/Funny-dating-website/"><strong>➥ Try the Live Demo</strong></a>
+  <a href="https://coderrvs-pixel.github.io/bday-card/"><strong>➥ Try the Live Demo</strong></a>
+</p>
+
+<p align="center">
+  <a href="https://coderrvs-pixel.github.io/bday-card/setup.html"><strong>✦ Create a Bday Surprise</strong></a>
 </p>
 
 ---
 
 ## 📖 About This Project
 
-This project is a creative and humorous take on a simple yes-or-no question. When presented with the question "Do you wanna go out with me?", the user has two choices. While the "Yes" button is straightforward, the "No" button is coded to actively evade the user's mouse cursor, making it a fun challenge to try and click it.
+This project is a creative birthday surprise. The first page asks "Is it your birthday?" with a pink cake. The Yes button moves across the screen, while No opens a second page where Yes shrinks and No grows. After a few No clicks, the final birthday card reveals "Happy Birthday!" with another pink cake.
 
 It's a simple but effective demonstration of how JavaScript can be used to create dynamic and interactive user experiences.
 
 ## ✨ Features
 
 -   **Interactive UI:** A playful and engaging user interface.
--   **Dynamic Button Movement:** The "No" button randomly repositions itself on the screen whenever the mouse hovers over it.
+-   **Dynamic Button Movement:** The "Yes" button randomly repositions itself whenever the mouse hovers over it.
 -   **Responsive Design:** The layout and functionality work well across different screen sizes.
--   **Two-Page Flow:** A simple, two-step experience from the initial question to the "yes" confirmation page.
+-   **Birthday Card Flow:** A three-step experience ending with a full birthday card.
 
 ## 🛠️ Tech Stack
 
