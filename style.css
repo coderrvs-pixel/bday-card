@@ -106,175 +106,194 @@ p a:hover {
     min-height: 100vh;
     height: auto;
     box-sizing: border-box;
-    overflow-x: hidden;
+    padding: 28px 16px 40px;
     overflow-y: auto;
-    background: radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--theme-color) 28%, white), #ffffff 58%);
 }
 
-.cake-stage {
-    width: min(100%, 620px);
-    min-height: 100vh;
-    box-sizing: border-box;
+.cake-page .birthday-card {
+    width: min(100%, 560px);
     margin: 0 auto;
-    padding: 32px 18px 48px;
     text-align: center;
 }
 
-.cake-stage .eyebrow,
-.cake-stage .header_text,
-.cake-stage .blow-instruction {
-    color: var(--theme-color);
+.cake-page .gif_container {
+    min-height: 270px;
 }
 
-.cake-stage .header_text {
-    margin-bottom: 10px;
-}
-
-.birthday-cake {
+.designed-cake {
     position: relative;
-    width: min(86vw, 360px);
-    height: 300px;
-    margin: 28px auto 10px;
+    width: min(82vw, 330px);
+    height: 255px;
+    margin: 24px auto 0;
     animation: cake-float 3s ease-in-out infinite;
-    will-change: transform;
 }
 
-.cake-body {
+.designed-cake .cake-decor {
     position: absolute;
-    right: 26px;
-    bottom: 38px;
-    left: 26px;
-    height: 132px;
-    border: 5px solid var(--theme-color);
-    border-radius: 14px 14px 28px 28px;
-    background: color-mix(in srgb, var(--theme-color) 78%, white);
-    box-shadow: inset 0 22px 0 #ffffff;
+    right: 15px;
+    bottom: 25px;
+    left: 15px;
+    height: 125px;
+    border: 4px solid var(--theme-color, #ff4a75);
+    border-radius: 18px 18px 30px 30px;
+    background: color-mix(in srgb, var(--theme-color, #ff4a75) 72%, white);
+    box-shadow: inset 0 24px 0 #ffffff, 0 10px 0 color-mix(in srgb, var(--theme-color, #ff4a75) 24%, transparent);
 }
 
-.cake-body span {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--theme-color);
-}
-
-.cake-body span:nth-child(1) { top: 50px; left: 44px; }
-.cake-body span:nth-child(2) { top: 85px; left: 50%; }
-.cake-body span:nth-child(3) { top: 50px; right: 44px; }
-
-.cake-icing {
+.designed-cake .cake-decor::before {
     position: absolute;
     right: 18px;
-    bottom: 150px;
+    bottom: 30px;
     left: 18px;
-    height: 54px;
-    z-index: 1;
-    border: 5px solid var(--theme-color);
+    height: 13px;
     border-radius: 50%;
-    background: #ffffff;
+    background: var(--theme-color, #ff4a75);
+    box-shadow: 0 36px 0 var(--theme-color, #ff4a75);
+    content: "";
 }
 
-.cake-plate {
+.cake-candles {
     position: absolute;
+    top: 70px;
     right: 0;
-    bottom: 20px;
     left: 0;
-    height: 34px;
-    border: 5px solid var(--theme-color);
-    border-radius: 50%;
-    background: #ffffff;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 38px;
 }
 
-.cake-candle-row,
-.cake-flame-row {
+.cake-candles i {
+    display: block;
+    width: 18px;
+    height: 62px;
+    border: 3px solid var(--theme-color, #ff4a75);
+    border-radius: 6px;
+    background: var(--theme-color, #ff4a75);
+    box-shadow: inset 5px 0 rgba(255, 255, 255, 0.35);
+}
+
+.cake-page .candle-flames {
     position: absolute;
+    top: 40px;
     right: 0;
     left: 0;
     z-index: 3;
     display: flex;
     justify-content: center;
-    gap: 42px;
+    gap: 43px;
 }
 
-.cake-candle-row { bottom: 192px; }
-.cake-candle-row i {
+.cake-page .candle-flames i {
     display: block;
-    width: 20px;
-    height: 62px;
-    border: 4px solid var(--theme-color);
-    border-radius: 5px;
-    background: var(--theme-color);
-    box-shadow: inset 5px 0 rgba(255, 255, 255, 0.35);
-}
-
-.cake-flame-row { bottom: 258px; }
-.cake-flame-row i {
-    display: block;
-    width: 18px;
+    width: 16px;
     height: 30px;
-    border: 3px solid var(--theme-color);
+    border: 3px solid var(--theme-color, #ff4a75);
     border-radius: 50% 50% 50% 0;
     background: #ffd166;
+    box-shadow: 0 0 15px #ffd166;
     transform: rotate(45deg);
-    animation: flame-flicker 0.7s ease-in-out infinite alternate;
-    will-change: transform, opacity;
+    animation: flame-flicker 0.65s ease-in-out infinite alternate;
 }
 
-.cake-flame-row i:nth-child(2) { animation-delay: 0.2s; }
-.cake-flame-row i:nth-child(3) { animation-delay: 0.4s; }
-
-.blown-out .cake-flame-row {
-    opacity: 0;
-    transform: translateY(12px) scale(0.4);
-    transition: 0.35s ease;
+.cake-page .blow-instruction {
+    color: var(--theme-color, #ff4a75);
+    font-size: 20px;
+    font-weight: 700;
 }
 
-.blown-out { animation: cake-celebrate 0.7s ease; }
-
-.blow-button {
+.cake-page .card-link {
     display: block;
-    margin: 18px auto;
-    background: var(--theme-color);
-    color: var(--theme-contrast);
-    box-shadow: 0 7px 0 color-mix(in srgb, var(--theme-color) 65%, black);
+    margin: 24px auto 0;
 }
 
-.receiver-card[hidden] { display: none; }
-
-.receiver-card:not([hidden]) {
-    display: grid;
-    place-items: center;
-    animation: card-rise 0.7s ease both;
-}
-
-.message-card {
-    border: 3px solid var(--theme-color);
-    border-radius: 14px;
-    padding: 16px 24px;
-    background: var(--theme-color);
-    color: var(--theme-contrast);
-    font: 700 16px "Trebuchet MS", sans-serif;
-    cursor: pointer;
-    box-shadow: 6px 6px 0 color-mix(in srgb, var(--theme-color) 35%, transparent);
-}
-
-.message-card:hover { transform: translateY(-3px) rotate(-1deg); }
-
-@keyframes cake-float {
-    50% { transform: translateY(-7px); }
+.cake-page .blown-out .candle-flames {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.4);
+    transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 @keyframes flame-flicker {
-    to { transform: rotate(52deg) scale(1.12); opacity: 0.75; }
+    from { transform: rotate(40deg) scale(0.9); }
+    to { transform: rotate(52deg) scale(1.1); }
 }
 
-@keyframes cake-celebrate {
-    35% { transform: scale(1.05) rotate(-2deg); }
-    70% { transform: scale(0.98) rotate(2deg); }
+@keyframes cake-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
 }
 
-@keyframes card-rise {
-    from { opacity: 0; transform: translateY(18px) scale(0.92); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+.card-page {
+    min-height: 100vh;
+    height: auto;
+    box-sizing: border-box;
+    padding: 32px 16px;
+    overflow-y: auto;
+    text-align: center;
 }
+
+.birthday-card-shell {
+    width: min(100%, 560px);
+    margin: 0 auto;
+}
+
+.flip-card {
+    width: min(100%, 390px);
+    height: 280px;
+    margin: 30px auto 16px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    perspective: 1200px;
+}
+
+.flip-card-inner {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.2, 0.75, 0.25, 1);
+    transform-style: preserve-3d;
+}
+
+.flip-card.is-open .flip-card-inner { transform: rotateY(180deg); }
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    backface-visibility: hidden;
+    border: 4px solid var(--theme-color, #ff4a75);
+    border-radius: 18px;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 10px 10px 0 color-mix(in srgb, var(--theme-color, #ff4a75) 34%, transparent);
+}
+
+.flip-card-front {
+    background: var(--theme-color, #ff4a75);
+    color: var(--theme-contrast, #ffffff);
+    font-size: 28px;
+}
+
+.flip-card-back {
+    overflow-y: auto;
+    background: #ffffff;
+    color: var(--theme-color, #ff4a75);
+    font-size: 21px;
+    line-height: 1.45;
+    transform: rotateY(180deg);
+}
+
+.card-ribbon,
+.card-seal,
+.card-signoff {
+    display: block;
+    color: var(--theme-contrast, #ffffff);
+}
+
+.card-seal { font-size: 30px; }
+.card-signoff { margin-top: 20px; font-size: 14px; }
+.card-hint { color: var(--theme-color, #ff4a75); }
