@@ -6,9 +6,18 @@ window.cardSettingsPromise = (async () => {
         name: params.get("name"),
         message: params.get("message")
     };
+    const cardId = params.get("cardId");
     const encodedCard = params.get("card");
 
-    if (encodedCard) {
+    if (cardId) {
+        try {
+            const response = await fetch(`/.netlify/functions/cards?id=${encodeURIComponent(cardId)}`);
+            if (!response.ok) throw new Error("Birthday card not found.");
+            settings = await response.json();
+        } catch (error) {
+            console.error("Could not load the birthday card.", error);
+        }
+    } else if (encodedCard) {
         try {
             const base64 = encodedCard.replace(/-/g, "+").replace(/_/g, "/");
             const binary = atob(base64);
@@ -30,5 +39,6 @@ window.cardSettingsPromise = (async () => {
         document.documentElement.style.setProperty("--theme-contrast", contrast);
     }
 
+    document.documentElement.classList.remove("theme-pending");
     return settings;
 })();

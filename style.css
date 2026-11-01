@@ -7,6 +7,10 @@
 
 * { box-sizing: border-box; }
 
+.theme-pending body.receiver-page,
+.theme-pending body.receiver-flow,
+.theme-pending body.message-page { visibility: hidden; }
+
 body {
     min-height: 100vh;
     margin: 0;
@@ -84,6 +88,7 @@ p a { color: var(--theme-color); font-weight: 700; text-decoration: none; }
 .setup-page .btn { width: 100%; border-color: var(--ink); border-radius: 0; background: var(--ink); color: white; }
 .link-result { margin-top: 28px; border-top: 1px solid var(--ink); padding-top: 16px; }
 .link-result p { color: var(--ink); text-align: left; }
+.link-error { color: #a00018; font: 700 14px "Trebuchet MS", sans-serif; }
 .balloon { position: fixed; z-index: 0; width: 58px; height: 74px; border: 2px solid var(--ink); border-radius: 50%; background: white; }
 .balloon::after { position: absolute; top: 73px; left: 28px; width: 1px; height: 120px; background: var(--ink); content: ""; }
 .balloon-one { top: 5%; left: 5%; transform: rotate(-12deg); }
