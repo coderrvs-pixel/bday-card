@@ -46,7 +46,7 @@
             const compressed = new Uint8Array(await new Response(stream).arrayBuffer());
             const binary = Array.from(compressed, (byte) => String.fromCharCode(byte)).join("");
             const encodedCard = btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-            shareLink.value = `${window.location.origin}${window.location.pathname.replace("setup.html", "index.html")}?card=${encodedCard}`;
+            shareLink.value = `https://happy-bday-gift.netlify.app/index.html?card=${encodedCard}`;
             linkResult.hidden = false;
         });
 
