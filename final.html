@@ -19,10 +19,12 @@
         </section>
         <button class="btn card-link" id="blowButton" type="button">Blow a candle</button>
     </main>
+    <script src="script.js"></script>
     <script>
-        const celebrantName = new URLSearchParams(window.location.search).get("name");
         const finalParams = new URLSearchParams(window.location.search);
-        if (celebrantName) document.getElementById("happyText").textContent = `Happy Birthday, ${celebrantName}!`;
+        window.cardSettingsPromise.then((settings) => {
+            if (settings.name) document.getElementById("happyText").textContent = `Happy Birthday, ${settings.name}!`;
+        });
         if (finalParams.get("blown") === "1") {
             document.getElementById("birthdayCake").classList.add("blown-out");
             document.querySelector(".blow-instruction").textContent = "Make a wish!";
@@ -131,6 +133,5 @@
             playBirthdaySong();
         }, { once: true });
     </script>
-    <script src="script.js"></script>
 </body>
 </html>

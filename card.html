@@ -22,29 +22,30 @@
 	</main>
 	<script src="script.js"></script>
 	<script>
-		const cardParams = new URLSearchParams(window.location.search);
-		const celebrantName = cardParams.get("name");
-		const birthdayMessage = cardParams.get("message") || "Wishing you a day full of love, laughter, and lots of cake.";
-		const birthdayCard = document.getElementById("birthdayCard");
-		const messageOutput = document.getElementById("birthdayMessage");
-		if (celebrantName) {
-			document.getElementById("celebrantName").textContent = celebrantName;
-			document.getElementById("cardTitle").textContent = `Happy Birthday, ${celebrantName}!`;
-		}
-		birthdayCard.addEventListener("click", () => {
-			if (birthdayCard.classList.contains("is-open")) return;
-			birthdayCard.classList.add("is-open");
-			birthdayCard.setAttribute("aria-expanded", "true");
-			birthdayCard.setAttribute("aria-label", "Birthday card opened");
-			const characters = Array.from(birthdayMessage);
-			let characterIndex = 0;
-			function typeNextCharacter() {
-				if (characterIndex >= characters.length) return;
-				messageOutput.textContent += characters[characterIndex];
-				characterIndex += 1;
-				window.setTimeout(typeNextCharacter, 28);
+		window.cardSettingsPromise.then((settings) => {
+			const celebrantName = settings.name;
+			const birthdayMessage = settings.message || "Wishing you a day full of love, laughter, and lots of cake.";
+			const birthdayCard = document.getElementById("birthdayCard");
+			const messageOutput = document.getElementById("birthdayMessage");
+			if (celebrantName) {
+				document.getElementById("celebrantName").textContent = celebrantName;
+				document.getElementById("cardTitle").textContent = `Happy Birthday, ${celebrantName}!`;
 			}
-			window.setTimeout(typeNextCharacter, 700);
+			birthdayCard.addEventListener("click", () => {
+				if (birthdayCard.classList.contains("is-open")) return;
+				birthdayCard.classList.add("is-open");
+				birthdayCard.setAttribute("aria-expanded", "true");
+				birthdayCard.setAttribute("aria-label", "Birthday card opened");
+				const characters = Array.from(birthdayMessage);
+				let characterIndex = 0;
+				function typeNextCharacter() {
+					if (characterIndex >= characters.length) return;
+					messageOutput.textContent += characters[characterIndex];
+					characterIndex += 1;
+					window.setTimeout(typeNextCharacter, 28);
+				}
+				window.setTimeout(typeNextCharacter, 700);
+			});
 		});
 	</script>
 </body>

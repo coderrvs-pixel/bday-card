@@ -20,7 +20,7 @@
             <label for="celebrant">Name of the birthday celebrant</label>
             <input id="celebrant" name="celebrant" placeholder="For example, Alex" required>
             <label for="message">Final card message</label>
-            <textarea id="message" name="message" rows="7" required>Wishing you a day full of love, laughter, and lots of cake.</textarea>
+            <textarea id="message" name="message" rows="7" maxlength="500" required>Wishing you a day full of love, laughter, and lots of cake.</textarea>
             <button class="btn" type="submit">Create link</button>
         </form>
         <div id="linkResult" class="link-result" hidden>
@@ -35,14 +35,18 @@
         const linkResult = document.getElementById("linkResult");
         const shareLink = document.getElementById("shareLink");
 
-        setupForm.addEventListener("submit", (event) => {
+        setupForm.addEventListener("submit", async (event) => {
             event.preventDefault();
-            const params = new URLSearchParams({
+            const settings = {
                 color: document.getElementById("themeColor").value,
                 name: document.getElementById("celebrant").value,
                 message: document.getElementById("message").value
-            });
-            shareLink.value = `${window.location.origin}${window.location.pathname.replace("setup.html", "index.html")}?${params}`;
+            };
+            const stream = new Blob([JSON.stringify(settings)]).stream().pipeThrough(new CompressionStream("gzip"));
+            const compressed = new Uint8Array(await new Response(stream).arrayBuffer());
+            const binary = Array.from(compressed, (byte) => String.fromCharCode(byte)).join("");
+            const encodedCard = btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+            shareLink.value = `${window.location.origin}${window.location.pathname.replace("setup.html", "index.html")}?card=${encodedCard}`;
             linkResult.hidden = false;
         });
 
