@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Create Birthday Card</title>
+	<title>Birthday Message</title>
 	<link rel="stylesheet" href="style.css">
 </head>
-
-<body>
-	<main class="container sender_page">
-		<h1 class="header_text">How old is the birthday celebrant?</h1>
-		<form class="age_form" id="ageForm">
-			<label for="ageInput">Age</label>
-			<input id="ageInput" name="age" type="number" min="1" max="100" required autofocus>
-			<button class="btn" type="submit">Create card</button>
-		</form>
+<body class="message-page">
+	<main class="message-shell">
+		<p class="eyebrow">A birthday message for <span id="celebrantName">you</span></p>
+		<h1 class="header_text" id="cardTitle">Happy Birthday!</h1>
+		<article class="message-letter" aria-label="Birthday message">
+			<p id="birthdayMessage">Wishing you a day full of love, laughter, and lots of cake.</p>
+		</article>
 	</main>
 	<script src="script.js"></script>
+	<script>
+		const cardParams = new URLSearchParams(window.location.search);
+		const celebrantName = cardParams.get("name");
+		const birthdayMessage = cardParams.get("message");
+		if (celebrantName) {
+			document.getElementById("celebrantName").textContent = celebrantName;
+			document.getElementById("cardTitle").textContent = `Happy Birthday, ${celebrantName}!`;
+		}
+		if (birthdayMessage) document.getElementById("birthdayMessage").textContent = birthdayMessage;
+	</script>
 </body>
 
 </html>
