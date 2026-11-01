@@ -24,15 +24,20 @@
     <script>
         let yesAttempts = 0;
         let screenClicks = 0;
+        const noUnlockClicks = 5;
         const yesButton = document.getElementById("yesButton");
         const noButton = document.getElementById("noButton");
         const yesStartRect = yesButton.getBoundingClientRect();
         noButton.disabled = true;
 
+        function updateNoButton() {
+            noButton.disabled = screenClicks < noUnlockClicks && yesAttempts < noUnlockClicks;
+        }
+
         document.addEventListener("pointerdown", (event) => {
             if (event.target.closest("button, a")) return;
             screenClicks += 1;
-            if (screenClicks >= 7) noButton.disabled = false;
+            updateNoButton();
         });
 
         function moveButton() {
@@ -57,12 +62,12 @@
         function attemptYes() {
             yesAttempts += 1;
             moveButton();
-            if (yesAttempts >= 7) noButton.disabled = false;
+            updateNoButton();
         }
 
         yesButton.addEventListener("click", attemptYes);
         noButton.addEventListener("click", () => {
-            if (screenClicks >= 7) window.location.href = "yes.html" + window.location.search;
+            if (!noButton.disabled) window.location.href = "yes.html" + window.location.search;
         });
     </script>
 </body>
