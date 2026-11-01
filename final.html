@@ -31,6 +31,22 @@
         }
         let audioContext;
         let songTimer;
+        let microphoneStream;
+        let listeningForBlow = false;
+        let microphoneUnavailable = false;
+        let microphoneRequestPending = false;
+
+        function finishBlow() {
+            document.getElementById("birthdayCake").classList.add("blown-out");
+            document.querySelector(".blow-instruction").textContent = "Make a wish!";
+            document.getElementById("receiverCard").hidden = false;
+            if (microphoneStream) microphoneStream.getTracks().forEach((track) => track.stop());
+            listeningForBlow = false;
+            microphoneUnavailable = true;
+            const blowButton = document.getElementById("blowButton");
+            blowButton.textContent = "Candles blown out";
+            blowButton.disabled = true;
+        }
 
         function playBirthdaySong() {
             audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
@@ -63,32 +79,42 @@
 
         async function listenForBlow() {
             const blowButton = document.getElementById("blowButton");
+            if (listeningForBlow || microphoneUnavailable) {
+                finishBlow();
+                return;
+            }
+            if (microphoneRequestPending) return;
+            microphoneRequestPending = true;
             try {
                 audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
                 if (audioContext.state === "suspended") await audioContext.resume();
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                const microphone = audioContext.createMediaStreamSource(stream);
+                microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const microphone = audioContext.createMediaStreamSource(microphoneStream);
                 const analyser = audioContext.createAnalyser();
+                analyser.fftSize = 1024;
                 const volumeData = new Uint8Array(analyser.fftSize);
                 microphone.connect(analyser);
-                blowButton.textContent = "Blow now!";
+                listeningForBlow = true;
+                blowButton.textContent = "Blow now or tap to finish";
+                let loudFrames = 0;
 
                 function checkBreath() {
+                    if (!listeningForBlow) return;
                     analyser.getByteTimeDomainData(volumeData);
-                    const volume = volumeData.reduce((total, value) => total + Math.abs(value - 128), 0) / volumeData.length;
-                    if (volume > 18) {
-                        document.getElementById("birthdayCake").classList.add("blown-out");
-                        document.querySelector(".blow-instruction").textContent = "Make a wish!";
-                        document.getElementById("receiverCard").hidden = false;
-                        stream.getTracks().forEach((track) => track.stop());
-                        blowButton.textContent = "Candles blown out";
+                    const rms = Math.sqrt(volumeData.reduce((total, value) => total + (value - 128) ** 2, 0) / volumeData.length);
+                    loudFrames = rms > 8 ? loudFrames + 1 : 0;
+                    if (loudFrames >= 3) {
+                        finishBlow();
                         return;
                     }
                     requestAnimationFrame(checkBreath);
                 }
                 checkBreath();
             } catch (error) {
-                blowButton.textContent = "Microphone unavailable";
+                microphoneUnavailable = true;
+                blowButton.textContent = "Tap to blow instead";
+            } finally {
+                microphoneRequestPending = false;
             }
         }
 
