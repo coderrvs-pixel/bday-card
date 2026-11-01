@@ -88,7 +88,9 @@
             try {
                 audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
                 if (audioContext.state === "suspended") await audioContext.resume();
-                microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                microphoneStream = await navigator.mediaDevices.getUserMedia({
+                    audio: { noiseSuppression: false, autoGainControl: true }
+                });
                 const microphone = audioContext.createMediaStreamSource(microphoneStream);
                 const analyser = audioContext.createAnalyser();
                 analyser.fftSize = 1024;
@@ -102,8 +104,8 @@
                     if (!listeningForBlow) return;
                     analyser.getByteTimeDomainData(volumeData);
                     const rms = Math.sqrt(volumeData.reduce((total, value) => total + (value - 128) ** 2, 0) / volumeData.length);
-                    loudFrames = rms > 8 ? loudFrames + 1 : 0;
-                    if (loudFrames >= 3) {
+                    loudFrames = rms > 4 ? loudFrames + 1 : 0;
+                    if (loudFrames >= 2) {
                         finishBlow();
                         return;
                     }
