@@ -7,13 +7,13 @@
 
 * { box-sizing: border-box; }
 
-html.theme-pending { background: #ffffff; }
+html.theme-pending { background: #ffffff !important; }
 
 .theme-pending body.receiver-page,
 .theme-pending body.receiver-flow,
 .theme-pending body.message-page {
-    visibility: hidden;
-    background: #ffffff;
+    visibility: hidden !important;
+    background: #ffffff !important;
 }
 
 body {
