@@ -92,9 +92,15 @@ p a { color: var(--theme-color); font-weight: 700; text-decoration: none; }
 .balloon-four { bottom: 2%; left: 8%; background: var(--ink); transform: rotate(11deg); }
 
 .receiver-page .receiver-buttons { width: min(100%, 360px); }
-.receiver-page #yesButton { position: fixed; z-index: 4; }
-.receiver-page #noButton { position: fixed; right: 24px; bottom: 24px; z-index: 5; margin: 0; }
+.receiver-page #yesButton { position: relative; z-index: 4; }
+.receiver-page #noButton { position: relative; z-index: 5; margin: 0; }
 .receiver-page #noButton:disabled { opacity: 1; cursor: default; }
+
+.theme-cake { position: relative; display: inline-block; width: 44px; height: 40px; vertical-align: -.08em; }
+.theme-cake-body { position: absolute; right: 2px; bottom: 2px; left: 2px; height: 24px; border: 3px solid var(--theme-color); border-radius: 6px 6px 10px 10px; background: color-mix(in srgb, var(--theme-color) 72%, white); }
+.theme-cake-body::before { position: absolute; top: 5px; right: 3px; left: 3px; height: 5px; border-radius: 50%; background: var(--theme-color); content: ""; }
+.theme-cake-candles { position: absolute; top: 0; right: 0; left: 0; z-index: 1; display: flex; justify-content: center; gap: 7px; }
+.theme-cake-candles i { display: block; width: 6px; height: 14px; border-radius: 3px; background: var(--theme-color); }
 
 .receiver-present { position: relative; width: min(68vw, 230px); height: 180px; margin: 22px auto; }
 .receiver-present::before { position: absolute; right: 12px; bottom: 0; left: 12px; height: 130px; border: 4px solid var(--theme-color); border-radius: 8px; background: color-mix(in srgb, var(--theme-color) 78%, white); content: ""; }
