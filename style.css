@@ -7,9 +7,14 @@
 
 * { box-sizing: border-box; }
 
+html.theme-pending { background: #ffffff; }
+
 .theme-pending body.receiver-page,
 .theme-pending body.receiver-flow,
-.theme-pending body.message-page { visibility: hidden; }
+.theme-pending body.message-page {
+    visibility: hidden;
+    background: #ffffff;
+}
 
 body {
     min-height: 100vh;

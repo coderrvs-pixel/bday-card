@@ -42,7 +42,7 @@ export default async function handler(request) {
 
         if (
             typeof card.name !== "string" || !card.name.trim() || card.name.length > 80 ||
-            typeof card.message !== "string" || !card.message.trim() || card.message.length > 500 ||
+            typeof card.message !== "string" || !card.message.trim() || card.message.length > 10000 ||
             typeof card.color !== "string" || !/^#[0-9a-f]{6}$/i.test(card.color)
         ) {
             return jsonResponse({ error: "Check the name, message, and color fields." }, 400, origin);
