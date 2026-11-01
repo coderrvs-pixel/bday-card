@@ -10,20 +10,42 @@
 	<main class="message-shell">
 		<p class="eyebrow">A birthday message for <span id="celebrantName">you</span></p>
 		<h1 class="header_text" id="cardTitle">Happy Birthday!</h1>
-		<article class="message-letter" aria-label="Birthday message">
-			<p id="birthdayMessage">Wishing you a day full of love, laughter, and lots of cake.</p>
-		</article>
+		<button class="flip-card" id="birthdayCard" type="button" aria-label="Open birthday card" aria-expanded="false">
+			<span class="flip-card-inner">
+				<span class="flip-card-front">
+					<span>A little birthday surprise</span>
+					<span class="flip-hint">Open your card</span>
+				</span>
+				<span class="flip-card-back" id="birthdayMessage" aria-live="polite"></span>
+			</span>
+		</button>
 	</main>
 	<script src="script.js"></script>
 	<script>
 		const cardParams = new URLSearchParams(window.location.search);
 		const celebrantName = cardParams.get("name");
-		const birthdayMessage = cardParams.get("message");
+		const birthdayMessage = cardParams.get("message") || "Wishing you a day full of love, laughter, and lots of cake.";
+		const birthdayCard = document.getElementById("birthdayCard");
+		const messageOutput = document.getElementById("birthdayMessage");
 		if (celebrantName) {
 			document.getElementById("celebrantName").textContent = celebrantName;
 			document.getElementById("cardTitle").textContent = `Happy Birthday, ${celebrantName}!`;
 		}
-		if (birthdayMessage) document.getElementById("birthdayMessage").textContent = birthdayMessage;
+		birthdayCard.addEventListener("click", () => {
+			if (birthdayCard.classList.contains("is-open")) return;
+			birthdayCard.classList.add("is-open");
+			birthdayCard.setAttribute("aria-expanded", "true");
+			birthdayCard.setAttribute("aria-label", "Birthday card opened");
+			const characters = Array.from(birthdayMessage);
+			let characterIndex = 0;
+			function typeNextCharacter() {
+				if (characterIndex >= characters.length) return;
+				messageOutput.textContent += characters[characterIndex];
+				characterIndex += 1;
+				window.setTimeout(typeNextCharacter, 28);
+			}
+			window.setTimeout(typeNextCharacter, 700);
+		});
 	</script>
 </body>
 
