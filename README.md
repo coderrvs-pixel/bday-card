@@ -1,57 +1,38 @@
-# Birthday Cake Card
+# Happy Bday Gift
 
-<div align="center">
-  <strong>Is it your birthday?</strong>
-</div>
+A playful, IT-student-style way to say **Happy Birthday**. Instead of sending only a greeting, share a small interactive website: it starts with a cheeky birthday question, leads through a playful button challenge, and ends with a personalized birthday card.
 
-<p align="center">
-  A playful pink birthday card with a moving Yes button and a growing No button.
-</p>
+**Create a birthday surprise:** [Open the sender page](https://happy-bday-gift.netlify.app/setup.html)
 
-<p align="center">
-  <a href="https://coderrvs-pixel.github.io/bday-card/"><strong>➥ Try the Live Demo</strong></a>
-</p>
+**Try the greeting:** [Open the birthday experience](https://happy-bday-gift.netlify.app/)
 
-<p align="center">
-  <a href="https://coderrvs-pixel.github.io/bday-card/setup.html"><strong>✦ Create a Bday Surprise</strong></a>
-</p>
+## What It Is For
 
----
+Happy Bday Gift turns a familiar birthday wish into a memorable little experience. It is designed for friends who want to greet someone in a more personal and interactive way, with a light tech-inspired touch.
 
-## 📖 About This Project
+## Features
 
-This project is a creative birthday surprise. The first page asks "Is it your birthday?" with a pink cake. The Yes button moves across the screen, while No opens a second page where Yes shrinks and No grows. After a few No clicks, the final birthday card reveals "Happy Birthday!" with another pink cake.
+- Personalize the recipient's name, card message, and theme color.
+- Share a short link for each custom card; the message itself is not exposed in the URL.
+- Play through a multi-page birthday interaction with mischievous Yes and No buttons.
+- Reveal a birthday cake, play a birthday tune, and blow out the candles.
+- Open a custom message inside an animated birthday card.
+- Use the responsive experience on desktop or mobile.
 
-It's a simple but effective demonstration of how JavaScript can be used to create dynamic and interactive user experiences.
+## How It Works
 
-## ✨ Features
+1. The sender enters the celebrant's name, chooses a color, and writes a message.
+2. The sender page saves those details through a Netlify Function and Netlify Blobs, then creates a short `/c/<id>` link.
+3. The recipient opens the link and moves through the interactive birthday flow.
+4. The final page presents the cake and reveals the sender's message in the birthday card.
 
--   **Interactive UI:** A playful and engaging user interface.
--   **Dynamic Button Movement:** The "Yes" button randomly repositions itself whenever the mouse hovers over it.
--   **Responsive Design:** The layout and functionality work well across different screen sizes.
--   **Birthday Card Flow:** A three-step experience ending with a full birthday card.
+## Built With
 
-## 🛠️ Tech Stack
+- HTML for the pages and card structure.
+- CSS for the responsive layout, themes, animations, and interactive details.
+- JavaScript for the birthday flow, card settings, and effects.
+- Netlify Functions and Netlify Blobs for saving personalized cards behind short links.
 
--   **HTML5:** For the basic structure and content of the pages.
--   **CSS3:** For styling, including the layout, button design, and transition effects.
--   **JavaScript:** For the core logic that makes the "No" button move dynamically around the page.
+## Hosting
 
-## 🚀 How It Works
-
-The magic of this project lies in a small JavaScript function.
--   An `onmouseover` event listener is attached to the "No" button.
--   When the user's cursor hovers over the button, the `moveButton()` function is triggered.
--   This function calculates a new random `x` and `y` coordinate within the browser's window and instantly moves the button to that new position using CSS `left` and `top` properties.
--   This creates the illusion that the button is "running away" from the cursor, making it nearly impossible to click.
-
----
-
-### 👤 Connect with me:
-
-<p>
-  <a href="https://www.instagram.com/aditya_patil_0122/">Instagram</a>
-</p>
-<p>
-  <a href="https://www.linkedin.com/in/aditya-patil-497b3224b/"> My LinkedIn</a>
-</p>
+The live site is hosted on Netlify. New cards created on the sender page are available at their generated short links.
